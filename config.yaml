@@ -1,0 +1,85 @@
+# FOVEA v0.1 configuration
+# All thresholds/weights here are PROTOTYPE HEURISTICS for the SIH v0.1 demo,
+# not a validated or final mathematical formulation.
+
+data:
+  root: SemanticPOSS_dataset/dataset   # contains sequences/<seq>/{velodyne,labels}
+  sequence: "00"
+  frame: 0                              # default frame index (overridden by demo autoscan)
+
+evaluation:
+  # Max range (meters) used for distance-band visualization/statistics.
+  # null = auto-detect from the actual frame (99th percentile of point range),
+  # so we never claim coverage the data doesn't have.
+  max_range_m: null
+
+origin:
+  # Explicit coordinate origin for grid indexing (sensor/vehicle frame origin).
+  x: 0.0
+  y: 0.0
+
+uniform:
+  cell_size_m: 0.20
+
+distance_adaptive:
+  # Bands are contiguous, ordered, non-overlapping ranges of 3D range (meters).
+  # cell_size_m strictly non-decreasing with distance (SIH monotonicity constraint).
+  bands:
+    - {max_m: 10,  cell_size_m: 0.05}
+    - {max_m: 30,  cell_size_m: 0.10}
+    - {max_m: 60,  cell_size_m: 0.25}
+    - {max_m: 100, cell_size_m: 0.50}
+
+fovea:
+  # Each band's cell_size_m (above) is the COARSEST allowed size in that band
+  # (matches the distance-adaptive baseline exactly). FOVEA may only refine
+  # FINER within the band, down to cell_size_m / refinement_factor. It can
+  # never be coarser than the band value and never finer than the floor.
+  refinement_factor: 4   # quadtree: level0=base, level1=base/2, level2=base/4
+
+  # Split thresholds on the [0,1] information score (quadtree top-down decision).
+  split_to_medium_threshold: 0.35
+  split_to_fine_threshold: 0.65
+
+  weights:
+    semantic: 0.5
+    geometry: 0.35
+    dynamic: 0.15
+    uncertainty: 0.0   # no confidence available from SemanticPOSS labels -> 0 by default
+
+  geometry:
+    # geometry_score = clip(std(z within cell) / max_expected_std, 0, 1)
+    max_expected_std_m: 0.5
+
+  # Classes treated as "dynamic-relevant" in absence of temporal tracking.
+  # This is a semantic-category proxy only (documented limitation), not real motion detection.
+  dynamic_classes: ["1 person", "2+ person", "rider", "car", "bike"]
+
+  # Semantic priority in [0,1], keyed EXACTLY by the names in SemanticPOSS's own
+  # LABEL_DICT (see src/semantic_labels.py, copied verbatim from the dataset's
+  # read_data.py). Any class not listed here defaults to 0.1 ("unknown"/unlisted).
+  semantic_priority:
+    unlabeled: 0.05
+    "1 person": 1.0
+    "2+ person": 1.0
+    rider: 0.9
+    car: 0.9
+    trunk: 0.25
+    plants: 0.15
+    "traffic sign 1": 0.6
+    "traffic sign 2": 0.6
+    "traffic sign 3": 0.6
+    pole: 0.4
+    trashcan: 0.5
+    building: 0.2
+    "cone/stone": 0.5
+    fence: 0.3
+    bike: 0.7
+    ground: 0.05
+
+visualization:
+  point_subsample_max: 40000   # cap points drawn in scatter views for responsiveness
+
+benchmark:
+  num_frames: 10
+  repeats_for_timing: 3
