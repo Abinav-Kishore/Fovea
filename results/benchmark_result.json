@@ -1,8 +1,8 @@
 {
-  "timestamp": "2026-08-26T07:53:03.357719",
+  "timestamp": "2026-08-26T12:41:32.379086",
   "config": {
     "data": {
-      "root": "C:\\Users\\tharu\\OneDrive\\Desktop\\fovea-demo\\SemanticPOSS_dataset\\dataset",
+      "root": "/Users/anishmkarthikeyan_0711/Desktop/FOVEA/dataset",
       "sequence": "00",
       "frame": 0
     },
@@ -85,19 +85,19 @@
     }
   },
   "sequence": "00",
-  "num_frames_processed": 5,
+  "num_frames_processed": 10,
   "environment": {
-    "python_version": "3.10.7",
-    "platform": "Windows-10-10.0.26200-SP0",
-    "processor": "Intel64 Family 6 Model 183 Stepping 1, GenuineIntel",
-    "numpy_version": "1.26.4",
-    "pandas_version": "2.3.0",
-    "process_rss_mb": 208.87
+    "python_version": "3.11.9",
+    "platform": "macOS-26.5.1-arm64-arm-64bit",
+    "processor": "arm",
+    "numpy_version": "2.4.6",
+    "pandas_version": "3.0.5",
+    "process_rss_mb": 399.97
   },
   "sequence_processing": {
-    "total_wall_time_s": 34.589845,
+    "total_wall_time_s": 31.007834,
     "note": "Wall time for loading + running all 3 methods per frame, sequentially, single process.",
-    "approx_throughput_frames_per_s": 0.1445510958490852
+    "approx_throughput_frames_per_s": 0.3224991465060088
   },
   "per_frame_results": [
     {
@@ -118,7 +118,7 @@
           "assignment_rate": 1.0,
           "out_of_envelope_points": 0,
           "invalid_points": 0,
-          "map_generation_latency_s": 0.18592239999998128,
+          "map_generation_latency_s": 0.12261741698603146,
           "estimated_map_storage_bytes": 2682848,
           "estimated_map_storage_kb": 2619.96875,
           "semantic_classes_covered": 17,
@@ -200,10 +200,10 @@
           },
           "timing_repeats": {
             "repeats": 3,
-            "mean_latency_s": 0.18830903333340152,
-            "std_latency_s": 0.017825813653966825,
-            "min_latency_s": 0.16478970000025583,
-            "max_latency_s": 0.20792809999693418,
+            "mean_latency_s": 0.12118212532368489,
+            "std_latency_s": 0.01121713440437053,
+            "min_latency_s": 0.1094531669805292,
+            "max_latency_s": 0.13629645900800824,
             "output_cell_count": 23954
           }
         },
@@ -224,7 +224,7 @@
           "assignment_rate": 0.9903687479372318,
           "out_of_envelope_points": 642,
           "invalid_points": 0,
-          "map_generation_latency_s": 0.28307619999395683,
+          "map_generation_latency_s": 0.16065666600479744,
           "estimated_map_storage_bytes": 3981824,
           "estimated_map_storage_kb": 3888.5,
           "semantic_classes_covered": 17,
@@ -299,10 +299,10 @@
           },
           "timing_repeats": {
             "repeats": 3,
-            "mean_latency_s": 0.29321679999945144,
-            "std_latency_s": 0.022811710863357565,
-            "min_latency_s": 0.2725910000008298,
-            "max_latency_s": 0.32501209999463754,
+            "mean_latency_s": 0.15611524966273768,
+            "std_latency_s": 0.013956539032227515,
+            "min_latency_s": 0.13647941598901525,
+            "max_latency_s": 0.1676660829980392,
             "output_cell_count": 35552
           }
         },
@@ -329,7 +329,7 @@
           "assignment_rate": 0.9903687479372318,
           "out_of_envelope_points": 642,
           "invalid_points": 0,
-          "map_generation_latency_s": 3.0990388999998686,
+          "map_generation_latency_s": 0.4707569160091225,
           "estimated_map_storage_bytes": 4689216,
           "estimated_map_storage_kb": 4579.3125,
           "semantic_classes_covered": 17,
@@ -404,10 +404,10 @@
           },
           "timing_repeats": {
             "repeats": 3,
-            "mean_latency_s": 2.251818266665699,
-            "std_latency_s": 1.0394435071896844,
-            "min_latency_s": 0.781827599996177,
-            "max_latency_s": 2.9899420000001555,
+            "mean_latency_s": 0.4967532223284555,
+            "std_latency_s": 0.013574778331690901,
+            "min_latency_s": 0.48221149999881163,
+            "max_latency_s": 0.5148783749900758,
             "output_cell_count": 41868
           }
         }
@@ -431,7 +431,7 @@
           "assignment_rate": 1.0,
           "out_of_envelope_points": 0,
           "invalid_points": 0,
-          "map_generation_latency_s": 0.17640339999343269,
+          "map_generation_latency_s": 0.09486599999945611,
           "estimated_map_storage_bytes": 2691248,
           "estimated_map_storage_kb": 2628.171875,
           "semantic_classes_covered": 17,
@@ -513,10 +513,10 @@
           },
           "timing_repeats": {
             "repeats": 3,
-            "mean_latency_s": 0.24671863333302704,
-            "std_latency_s": 0.022192826015799385,
-            "min_latency_s": 0.22151960000337567,
-            "max_latency_s": 0.2755211999974563,
+            "mean_latency_s": 0.10082909733561489,
+            "std_latency_s": 0.00999241918342803,
+            "min_latency_s": 0.09225645900005475,
+            "max_latency_s": 0.1148444999998901,
             "output_cell_count": 24029
           }
         },
@@ -537,7 +537,7 @@
           "assignment_rate": 0.9909081361679144,
           "out_of_envelope_points": 606,
           "invalid_points": 0,
-          "map_generation_latency_s": 0.32714100000157487,
+          "map_generation_latency_s": 0.14302229200256988,
           "estimated_map_storage_bytes": 4001088,
           "estimated_map_storage_kb": 3907.3125,
           "semantic_classes_covered": 17,
@@ -619,10 +619,10 @@
           },
           "timing_repeats": {
             "repeats": 3,
-            "mean_latency_s": 0.2899319999972552,
-            "std_latency_s": 0.019332357704108738,
-            "min_latency_s": 0.2642227999967872,
-            "max_latency_s": 0.310841899998195,
+            "mean_latency_s": 0.15668494432854155,
+            "std_latency_s": 0.015074004677658025,
+            "min_latency_s": 0.14161412499379367,
+            "max_latency_s": 0.17727758298860863,
             "output_cell_count": 35724
           }
         },
@@ -649,7 +649,7 @@
           "assignment_rate": 0.9909081361679144,
           "out_of_envelope_points": 606,
           "invalid_points": 0,
-          "map_generation_latency_s": 0.8546611999991001,
+          "map_generation_latency_s": 1.0057692499831319,
           "estimated_map_storage_bytes": 4713520,
           "estimated_map_storage_kb": 4603.046875,
           "semantic_classes_covered": 17,
@@ -731,10 +731,10 @@
           },
           "timing_repeats": {
             "repeats": 3,
-            "mean_latency_s": 0.900049333332087,
-            "std_latency_s": 0.045245038516840405,
-            "min_latency_s": 0.8464151000007405,
-            "max_latency_s": 0.9570855999991181,
+            "mean_latency_s": 0.4886709026565465,
+            "std_latency_s": 0.03667988529453838,
+            "min_latency_s": 0.4569106249837205,
+            "max_latency_s": 0.5400698329904117,
             "output_cell_count": 42085
           }
         }
@@ -758,7 +758,7 @@
           "assignment_rate": 1.0,
           "out_of_envelope_points": 0,
           "invalid_points": 0,
-          "map_generation_latency_s": 0.1662173000004259,
+          "map_generation_latency_s": 0.11329970898805186,
           "estimated_map_storage_bytes": 2681728,
           "estimated_map_storage_kb": 2618.875,
           "semantic_classes_covered": 17,
@@ -840,10 +840,10 @@
           },
           "timing_repeats": {
             "repeats": 3,
-            "mean_latency_s": 0.20170430000143824,
-            "std_latency_s": 0.017561989521869055,
-            "min_latency_s": 0.1769092000031378,
-            "max_latency_s": 0.2153418000016245,
+            "mean_latency_s": 0.10175793066931267,
+            "std_latency_s": 0.00753380544774706,
+            "min_latency_s": 0.09240387499448843,
+            "max_latency_s": 0.11085237501538359,
             "output_cell_count": 23944
           }
         },
@@ -864,7 +864,7 @@
           "assignment_rate": 0.9912483487450462,
           "out_of_envelope_points": 583,
           "invalid_points": 0,
-          "map_generation_latency_s": 0.29938360000232933,
+          "map_generation_latency_s": 0.1412861669959966,
           "estimated_map_storage_bytes": 3982608,
           "estimated_map_storage_kb": 3889.265625,
           "semantic_classes_covered": 17,
@@ -947,10 +947,10 @@
           },
           "timing_repeats": {
             "repeats": 3,
-            "mean_latency_s": 0.31925766666730243,
-            "std_latency_s": 0.03675361660111827,
-            "min_latency_s": 0.27047809999930905,
-            "max_latency_s": 0.3591928000023472,
+            "mean_latency_s": 0.16776945832922743,
+            "std_latency_s": 0.008323461444208195,
+            "min_latency_s": 0.15733220797847025,
+            "max_latency_s": 0.17770166700938717,
             "output_cell_count": 35559
           }
         },
@@ -977,7 +977,7 @@
           "assignment_rate": 0.9912483487450462,
           "out_of_envelope_points": 583,
           "invalid_points": 0,
-          "map_generation_latency_s": 0.9003385999967577,
+          "map_generation_latency_s": 0.4525533750129398,
           "estimated_map_storage_bytes": 4698848,
           "estimated_map_storage_kb": 4588.71875,
           "semantic_classes_covered": 17,
@@ -1060,10 +1060,10 @@
           },
           "timing_repeats": {
             "repeats": 3,
-            "mean_latency_s": 0.8753026999984286,
-            "std_latency_s": 0.04363024117150433,
-            "min_latency_s": 0.8291616999995313,
-            "max_latency_s": 0.9338506999993115,
+            "mean_latency_s": 0.47824355533036095,
+            "std_latency_s": 0.006694621698937288,
+            "min_latency_s": 0.46952295798109844,
+            "max_latency_s": 0.4857960829976946,
             "output_cell_count": 41954
           }
         }
@@ -1087,7 +1087,7 @@
           "assignment_rate": 1.0,
           "out_of_envelope_points": 0,
           "invalid_points": 0,
-          "map_generation_latency_s": 0.1515402000004542,
+          "map_generation_latency_s": 0.08884258297621273,
           "estimated_map_storage_bytes": 2671872,
           "estimated_map_storage_kb": 2609.25,
           "semantic_classes_covered": 17,
@@ -1170,10 +1170,10 @@
           },
           "timing_repeats": {
             "repeats": 3,
-            "mean_latency_s": 0.19748696666647447,
-            "std_latency_s": 0.008835633189016201,
-            "min_latency_s": 0.1852729999955045,
-            "max_latency_s": 0.20587800000066636,
+            "mean_latency_s": 0.1016289303273273,
+            "std_latency_s": 0.008190033583286177,
+            "min_latency_s": 0.09055616598925553,
+            "max_latency_s": 0.11010816699126735,
             "output_cell_count": 23856
           }
         },
@@ -1194,7 +1194,7 @@
           "assignment_rate": 0.9915078458486142,
           "out_of_envelope_points": 565,
           "invalid_points": 0,
-          "map_generation_latency_s": 0.26632339999923715,
+          "map_generation_latency_s": 0.12746054099989124,
           "estimated_map_storage_bytes": 3998848,
           "estimated_map_storage_kb": 3905.125,
           "semantic_classes_covered": 17,
@@ -1277,10 +1277,10 @@
           },
           "timing_repeats": {
             "repeats": 3,
-            "mean_latency_s": 0.27916823333119584,
-            "std_latency_s": 0.03879387552019139,
-            "min_latency_s": 0.24272479999490315,
-            "max_latency_s": 0.3329054999994696,
+            "mean_latency_s": 0.15321043066796847,
+            "std_latency_s": 0.006287162215425466,
+            "min_latency_s": 0.14476120899780653,
+            "max_latency_s": 0.15983308298746124,
             "output_cell_count": 35704
           }
         },
@@ -1307,7 +1307,7 @@
           "assignment_rate": 0.9915078458486142,
           "out_of_envelope_points": 565,
           "invalid_points": 0,
-          "map_generation_latency_s": 0.8393044999975245,
+          "map_generation_latency_s": 0.460411291976925,
           "estimated_map_storage_bytes": 4696384,
           "estimated_map_storage_kb": 4586.3125,
           "semantic_classes_covered": 17,
@@ -1391,10 +1391,10 @@
           },
           "timing_repeats": {
             "repeats": 3,
-            "mean_latency_s": 0.8545556999985516,
-            "std_latency_s": 0.05647320810687407,
-            "min_latency_s": 0.7747065000003204,
-            "max_latency_s": 0.8958636999959708,
+            "mean_latency_s": 0.46855515232891776,
+            "std_latency_s": 0.009800796561949456,
+            "min_latency_s": 0.4571269579755608,
+            "max_latency_s": 0.48106120800366625,
             "output_cell_count": 41932
           }
         }
@@ -1418,7 +1418,7 @@
           "assignment_rate": 1.0,
           "out_of_envelope_points": 0,
           "invalid_points": 0,
-          "map_generation_latency_s": 0.1505743000016082,
+          "map_generation_latency_s": 0.10832204201142304,
           "estimated_map_storage_bytes": 2681616,
           "estimated_map_storage_kb": 2618.765625,
           "semantic_classes_covered": 17,
@@ -1501,10 +1501,10 @@
           },
           "timing_repeats": {
             "repeats": 3,
-            "mean_latency_s": 0.1721297666663304,
-            "std_latency_s": 0.01900543458193951,
-            "min_latency_s": 0.1456486999959452,
-            "max_latency_s": 0.18935459999920567,
+            "mean_latency_s": 0.09664668068095732,
+            "std_latency_s": 0.00973697194144137,
+            "min_latency_s": 0.08831408401601948,
+            "max_latency_s": 0.11030712502542883,
             "output_cell_count": 23943
           }
         },
@@ -1525,7 +1525,7 @@
           "assignment_rate": 0.9913443332431702,
           "out_of_envelope_points": 576,
           "invalid_points": 0,
-          "map_generation_latency_s": 0.23741880000306992,
+          "map_generation_latency_s": 0.14339991699671373,
           "estimated_map_storage_bytes": 3991792,
           "estimated_map_storage_kb": 3898.234375,
           "semantic_classes_covered": 17,
@@ -1608,10 +1608,10 @@
           },
           "timing_repeats": {
             "repeats": 3,
-            "mean_latency_s": 0.2881011333326266,
-            "std_latency_s": 0.014565609385633504,
-            "min_latency_s": 0.26753199999802746,
-            "max_latency_s": 0.2993440999998711,
+            "mean_latency_s": 0.16643084700141722,
+            "std_latency_s": 0.026816471491241868,
+            "min_latency_s": 0.134879458026262,
+            "max_latency_s": 0.20042924999142997,
             "output_cell_count": 35641
           }
         },
@@ -1638,7 +1638,7 @@
           "assignment_rate": 0.9913443332431702,
           "out_of_envelope_points": 576,
           "invalid_points": 0,
-          "map_generation_latency_s": 0.8544400000027963,
+          "map_generation_latency_s": 0.5069089170137886,
           "estimated_map_storage_bytes": 4700416,
           "estimated_map_storage_kb": 4590.25,
           "semantic_classes_covered": 17,
@@ -1721,11 +1721,1652 @@
           },
           "timing_repeats": {
             "repeats": 3,
-            "mean_latency_s": 0.8014592333323284,
-            "std_latency_s": 0.05922214321697697,
-            "min_latency_s": 0.7177267000006395,
-            "max_latency_s": 0.8449193999986164,
+            "mean_latency_s": 0.4801732919974408,
+            "std_latency_s": 0.017145242163609294,
+            "min_latency_s": 0.4573670419922564,
+            "max_latency_s": 0.49870699999155477,
             "output_cell_count": 41968
+          }
+        }
+      }
+    },
+    {
+      "frame_id": "000005",
+      "num_points": 66532,
+      "methods": {
+        "uniform": {
+          "method": "uniform",
+          "output_cell_count": 23828,
+          "cells_by_resolution_level": {
+            "0": 23828
+          },
+          "distinct_cell_sizes_m": [
+            0.2
+          ],
+          "input_points": 66532,
+          "assigned_points": 66532,
+          "assignment_rate": 1.0,
+          "out_of_envelope_points": 0,
+          "invalid_points": 0,
+          "map_generation_latency_s": 0.09293529199203476,
+          "estimated_map_storage_bytes": 2668736,
+          "estimated_map_storage_kb": 2606.1875,
+          "semantic_classes_covered": 17,
+          "distance_band_stats": {
+            "0-10m": {
+              "cell_count": 1645,
+              "point_count": 10860,
+              "semantic_classes_present": {
+                "car": 517,
+                "fence": 72,
+                "ground": 1053,
+                "unlabeled": 3
+              }
+            },
+            "10-30m": {
+              "cell_count": 10149,
+              "point_count": 37098,
+              "semantic_classes_present": {
+                "bike": 469,
+                "traffic sign 3": 24,
+                "building": 1057,
+                "pole": 44,
+                "plants": 2234,
+                "ground": 4575,
+                "fence": 374,
+                "traffic sign 1": 41,
+                "1 person": 37,
+                "car": 1263,
+                "2+ person": 23,
+                "rider": 8
+              }
+            },
+            "30-60m": {
+              "cell_count": 8505,
+              "point_count": 14433,
+              "semantic_classes_present": {
+                "plants": 4535,
+                "traffic sign 2": 5,
+                "pole": 29,
+                "building": 1613,
+                "ground": 819,
+                "fence": 432,
+                "car": 594,
+                "traffic sign 3": 4,
+                "traffic sign 1": 27,
+                "bike": 350,
+                "trashcan": 17,
+                "rider": 24,
+                "1 person": 41,
+                "2+ person": 8,
+                "unknown": 2,
+                "cone/stone": 5
+              }
+            },
+            "60-100m": {
+              "cell_count": 3040,
+              "point_count": 3537,
+              "semantic_classes_present": {
+                "unlabeled": 1298,
+                "building": 503,
+                "plants": 943,
+                "car": 72,
+                "pole": 8,
+                "unknown": 42,
+                "bike": 14,
+                "fence": 116,
+                "ground": 27,
+                "traffic sign 1": 5,
+                "rider": 7,
+                "1 person": 5
+              }
+            },
+            ">100m": {
+              "cell_count": 489,
+              "point_count": 604,
+              "semantic_classes_present": {
+                "unlabeled": 489
+              }
+            }
+          },
+          "timing_repeats": {
+            "repeats": 3,
+            "mean_latency_s": 0.10679538934103523,
+            "std_latency_s": 0.010175502060979277,
+            "min_latency_s": 0.09331845899578184,
+            "max_latency_s": 0.11790312500670552,
+            "output_cell_count": 23828
+          }
+        },
+        "distance_adaptive": {
+          "method": "distance_adaptive",
+          "output_cell_count": 35765,
+          "cells_by_resolution_level": {
+            "0": 35765
+          },
+          "distinct_cell_sizes_m": [
+            0.05,
+            0.1,
+            0.25,
+            0.5
+          ],
+          "input_points": 66532,
+          "assigned_points": 65920,
+          "assignment_rate": 0.9908014188661095,
+          "out_of_envelope_points": 612,
+          "invalid_points": 0,
+          "map_generation_latency_s": 0.13048229101696052,
+          "estimated_map_storage_bytes": 4005680,
+          "estimated_map_storage_kb": 3911.796875,
+          "semantic_classes_covered": 17,
+          "distance_band_stats": {
+            "0-10m": {
+              "cell_count": 6871,
+              "point_count": 10865,
+              "semantic_classes_present": {
+                "car": 2792,
+                "ground": 3765,
+                "fence": 302,
+                "unlabeled": 12
+              }
+            },
+            "10-30m": {
+              "cell_count": 19609,
+              "point_count": 37093,
+              "semantic_classes_present": {
+                "bike": 775,
+                "traffic sign 3": 47,
+                "building": 2191,
+                "pole": 95,
+                "plants": 4650,
+                "ground": 8276,
+                "fence": 711,
+                "traffic sign 1": 105,
+                "1 person": 79,
+                "car": 2614,
+                "2+ person": 53,
+                "rider": 13
+              }
+            },
+            "30-60m": {
+              "cell_count": 7358,
+              "point_count": 14433,
+              "semantic_classes_present": {
+                "plants": 3986,
+                "traffic sign 2": 5,
+                "pole": 25,
+                "building": 1338,
+                "ground": 705,
+                "fence": 369,
+                "car": 491,
+                "bike": 328,
+                "traffic sign 3": 4,
+                "traffic sign 1": 21,
+                "trashcan": 14,
+                "rider": 22,
+                "1 person": 34,
+                "2+ person": 8,
+                "unknown": 2,
+                "cone/stone": 6
+              }
+            },
+            "60-100m": {
+              "cell_count": 1920,
+              "point_count": 3517,
+              "semantic_classes_present": {
+                "unlabeled": 852,
+                "building": 305,
+                "plants": 579,
+                "car": 41,
+                "pole": 4,
+                "unknown": 23,
+                "bike": 9,
+                "fence": 76,
+                "ground": 19,
+                "traffic sign 1": 3,
+                "rider": 6,
+                "1 person": 3
+              }
+            },
+            ">100m": {
+              "cell_count": 7,
+              "point_count": 12,
+              "semantic_classes_present": {
+                "unlabeled": 7
+              }
+            }
+          },
+          "timing_repeats": {
+            "repeats": 3,
+            "mean_latency_s": 0.16810787532206936,
+            "std_latency_s": 0.013190365045280102,
+            "min_latency_s": 0.15264166699489579,
+            "max_latency_s": 0.18487291698693298,
+            "output_cell_count": 35765
+          }
+        },
+        "fovea": {
+          "method": "fovea",
+          "output_cell_count": 41945,
+          "cells_by_resolution_level": {
+            "1": 13541,
+            "0": 27114,
+            "2": 1290
+          },
+          "distinct_cell_sizes_m": [
+            0.0125,
+            0.025,
+            0.05,
+            0.0625,
+            0.1,
+            0.125,
+            0.25,
+            0.5
+          ],
+          "input_points": 66532,
+          "assigned_points": 65920,
+          "assignment_rate": 0.9908014188661095,
+          "out_of_envelope_points": 612,
+          "invalid_points": 0,
+          "map_generation_latency_s": 0.4422676250105724,
+          "estimated_map_storage_bytes": 4697840,
+          "estimated_map_storage_kb": 4587.734375,
+          "semantic_classes_covered": 17,
+          "distance_band_stats": {
+            "0-10m": {
+              "cell_count": 8343,
+              "point_count": 10856,
+              "semantic_classes_present": {
+                "car": 4234,
+                "fence": 309,
+                "ground": 3788,
+                "unlabeled": 12
+              }
+            },
+            "10-30m": {
+              "cell_count": 22880,
+              "point_count": 37105,
+              "semantic_classes_present": {
+                "pole": 177,
+                "traffic sign 3": 76,
+                "building": 2882,
+                "plants": 4925,
+                "ground": 8415,
+                "bike": 971,
+                "traffic sign 1": 146,
+                "1 person": 148,
+                "fence": 769,
+                "2+ person": 127,
+                "car": 4229,
+                "rider": 15
+              }
+            },
+            "30-60m": {
+              "cell_count": 8620,
+              "point_count": 14431,
+              "semantic_classes_present": {
+                "plants": 4221,
+                "traffic sign 2": 6,
+                "pole": 36,
+                "building": 1710,
+                "ground": 727,
+                "fence": 395,
+                "traffic sign 3": 4,
+                "traffic sign 1": 25,
+                "bike": 398,
+                "car": 944,
+                "trashcan": 20,
+                "rider": 40,
+                "1 person": 62,
+                "2+ person": 24,
+                "unknown": 2,
+                "cone/stone": 6
+              }
+            },
+            "60-100m": {
+              "cell_count": 2095,
+              "point_count": 3516,
+              "semantic_classes_present": {
+                "unlabeled": 876,
+                "building": 327,
+                "plants": 653,
+                "car": 73,
+                "pole": 7,
+                "unknown": 24,
+                "bike": 14,
+                "fence": 86,
+                "ground": 19,
+                "traffic sign 1": 3,
+                "rider": 8,
+                "1 person": 5
+              }
+            },
+            ">100m": {
+              "cell_count": 7,
+              "point_count": 12,
+              "semantic_classes_present": {
+                "unlabeled": 7
+              }
+            }
+          },
+          "timing_repeats": {
+            "repeats": 3,
+            "mean_latency_s": 0.46693480566803675,
+            "std_latency_s": 0.008266377521153268,
+            "min_latency_s": 0.455283875024179,
+            "max_latency_s": 0.4735917499929201,
+            "output_cell_count": 41945
+          }
+        }
+      }
+    },
+    {
+      "frame_id": "000006",
+      "num_points": 66602,
+      "methods": {
+        "uniform": {
+          "method": "uniform",
+          "output_cell_count": 23946,
+          "cells_by_resolution_level": {
+            "0": 23946
+          },
+          "distinct_cell_sizes_m": [
+            0.2
+          ],
+          "input_points": 66602,
+          "assigned_points": 66602,
+          "assignment_rate": 1.0,
+          "out_of_envelope_points": 0,
+          "invalid_points": 0,
+          "map_generation_latency_s": 0.1126084580027964,
+          "estimated_map_storage_bytes": 2681952,
+          "estimated_map_storage_kb": 2619.09375,
+          "semantic_classes_covered": 17,
+          "distance_band_stats": {
+            "0-10m": {
+              "cell_count": 1659,
+              "point_count": 10984,
+              "semantic_classes_present": {
+                "car": 516,
+                "ground": 1067,
+                "fence": 73,
+                "unlabeled": 3
+              }
+            },
+            "10-30m": {
+              "cell_count": 10220,
+              "point_count": 37025,
+              "semantic_classes_present": {
+                "bike": 436,
+                "traffic sign 3": 21,
+                "building": 1073,
+                "pole": 36,
+                "plants": 2228,
+                "ground": 4706,
+                "fence": 348,
+                "traffic sign 1": 42,
+                "1 person": 33,
+                "car": 1265,
+                "2+ person": 24,
+                "rider": 8
+              }
+            },
+            "30-60m": {
+              "cell_count": 8499,
+              "point_count": 14429,
+              "semantic_classes_present": {
+                "plants": 4523,
+                "traffic sign 2": 11,
+                "pole": 27,
+                "building": 1600,
+                "ground": 809,
+                "trashcan": 21,
+                "fence": 432,
+                "car": 595,
+                "bike": 364,
+                "traffic sign 3": 5,
+                "traffic sign 1": 29,
+                "rider": 25,
+                "1 person": 48,
+                "2+ person": 5,
+                "unknown": 1,
+                "cone/stone": 4
+              }
+            },
+            "60-100m": {
+              "cell_count": 3053,
+              "point_count": 3524,
+              "semantic_classes_present": {
+                "unlabeled": 1241,
+                "building": 534,
+                "plants": 972,
+                "car": 76,
+                "pole": 7,
+                "unknown": 38,
+                "bike": 17,
+                "fence": 132,
+                "ground": 23,
+                "traffic sign 1": 5,
+                "rider": 3,
+                "1 person": 5
+              }
+            },
+            ">100m": {
+              "cell_count": 515,
+              "point_count": 640,
+              "semantic_classes_present": {
+                "unlabeled": 515
+              }
+            }
+          },
+          "timing_repeats": {
+            "repeats": 3,
+            "mean_latency_s": 0.09965856933073762,
+            "std_latency_s": 0.0109792616043668,
+            "min_latency_s": 0.09150662500178441,
+            "max_latency_s": 0.11517900001490489,
+            "output_cell_count": 23946
+          }
+        },
+        "distance_adaptive": {
+          "method": "distance_adaptive",
+          "output_cell_count": 35893,
+          "cells_by_resolution_level": {
+            "0": 35893
+          },
+          "distinct_cell_sizes_m": [
+            0.05,
+            0.1,
+            0.25,
+            0.5
+          ],
+          "input_points": 66602,
+          "assigned_points": 65958,
+          "assignment_rate": 0.990330620702081,
+          "out_of_envelope_points": 644,
+          "invalid_points": 0,
+          "map_generation_latency_s": 0.146448582992889,
+          "estimated_map_storage_bytes": 4020016,
+          "estimated_map_storage_kb": 3925.796875,
+          "semantic_classes_covered": 17,
+          "distance_band_stats": {
+            "0-10m": {
+              "cell_count": 7047,
+              "point_count": 11028,
+              "semantic_classes_present": {
+                "car": 2839,
+                "ground": 3869,
+                "fence": 329,
+                "unlabeled": 10
+              }
+            },
+            "10-30m": {
+              "cell_count": 19599,
+              "point_count": 37007,
+              "semantic_classes_present": {
+                "bike": 739,
+                "traffic sign 3": 47,
+                "building": 2242,
+                "pole": 77,
+                "plants": 4643,
+                "ground": 8381,
+                "traffic sign 1": 104,
+                "1 person": 74,
+                "car": 2557,
+                "2+ person": 50,
+                "fence": 671,
+                "rider": 14
+              }
+            },
+            "30-60m": {
+              "cell_count": 7339,
+              "point_count": 14404,
+              "semantic_classes_present": {
+                "plants": 3950,
+                "traffic sign 2": 9,
+                "pole": 24,
+                "building": 1338,
+                "ground": 685,
+                "trashcan": 15,
+                "fence": 377,
+                "car": 493,
+                "bike": 343,
+                "traffic sign 3": 5,
+                "traffic sign 1": 25,
+                "rider": 20,
+                "1 person": 43,
+                "2+ person": 7,
+                "unknown": 1,
+                "cone/stone": 4
+              }
+            },
+            "60-100m": {
+              "cell_count": 1899,
+              "point_count": 3506,
+              "semantic_classes_present": {
+                "unlabeled": 811,
+                "building": 311,
+                "plants": 592,
+                "car": 37,
+                "pole": 2,
+                "unknown": 21,
+                "bike": 14,
+                "fence": 86,
+                "ground": 17,
+                "traffic sign 1": 4,
+                "rider": 2,
+                "1 person": 2
+              }
+            },
+            ">100m": {
+              "cell_count": 9,
+              "point_count": 13,
+              "semantic_classes_present": {
+                "unlabeled": 9
+              }
+            }
+          },
+          "timing_repeats": {
+            "repeats": 3,
+            "mean_latency_s": 0.14611287499428727,
+            "std_latency_s": 0.009907253442891515,
+            "min_latency_s": 0.13210266700480133,
+            "max_latency_s": 0.1532447079953272,
+            "output_cell_count": 35893
+          }
+        },
+        "fovea": {
+          "method": "fovea",
+          "output_cell_count": 42103,
+          "cells_by_resolution_level": {
+            "1": 13648,
+            "0": 27233,
+            "2": 1222
+          },
+          "distinct_cell_sizes_m": [
+            0.0125,
+            0.025,
+            0.05,
+            0.0625,
+            0.1,
+            0.125,
+            0.25,
+            0.5
+          ],
+          "input_points": 66602,
+          "assigned_points": 65958,
+          "assignment_rate": 0.990330620702081,
+          "out_of_envelope_points": 644,
+          "invalid_points": 0,
+          "map_generation_latency_s": 0.43028533400502056,
+          "estimated_map_storage_bytes": 4715536,
+          "estimated_map_storage_kb": 4605.015625,
+          "semantic_classes_covered": 17,
+          "distance_band_stats": {
+            "0-10m": {
+              "cell_count": 8498,
+              "point_count": 11007,
+              "semantic_classes_present": {
+                "car": 4263,
+                "fence": 334,
+                "ground": 3891,
+                "unlabeled": 10
+              }
+            },
+            "10-30m": {
+              "cell_count": 22939,
+              "point_count": 37017,
+              "semantic_classes_present": {
+                "pole": 147,
+                "traffic sign 3": 69,
+                "building": 2991,
+                "plants": 4915,
+                "ground": 8523,
+                "bike": 948,
+                "traffic sign 1": 146,
+                "1 person": 147,
+                "2+ person": 134,
+                "car": 4183,
+                "fence": 721,
+                "rider": 15
+              }
+            },
+            "30-60m": {
+              "cell_count": 8596,
+              "point_count": 14413,
+              "semantic_classes_present": {
+                "plants": 4189,
+                "traffic sign 2": 10,
+                "pole": 36,
+                "building": 1718,
+                "ground": 705,
+                "fence": 409,
+                "trashcan": 17,
+                "car": 933,
+                "traffic sign 3": 5,
+                "traffic sign 1": 30,
+                "bike": 405,
+                "rider": 38,
+                "1 person": 72,
+                "2+ person": 23,
+                "unknown": 1,
+                "cone/stone": 5
+              }
+            },
+            "60-100m": {
+              "cell_count": 2061,
+              "point_count": 3508,
+              "semantic_classes_present": {
+                "unlabeled": 832,
+                "building": 334,
+                "plants": 652,
+                "car": 75,
+                "pole": 5,
+                "unknown": 21,
+                "bike": 17,
+                "fence": 96,
+                "ground": 18,
+                "traffic sign 1": 4,
+                "rider": 2,
+                "1 person": 5
+              }
+            },
+            ">100m": {
+              "cell_count": 9,
+              "point_count": 13,
+              "semantic_classes_present": {
+                "unlabeled": 9
+              }
+            }
+          },
+          "timing_repeats": {
+            "repeats": 3,
+            "mean_latency_s": 0.48925680566268664,
+            "std_latency_s": 0.031761868742929605,
+            "min_latency_s": 0.4492995000036899,
+            "max_latency_s": 0.5270057919842657,
+            "output_cell_count": 42103
+          }
+        }
+      }
+    },
+    {
+      "frame_id": "000007",
+      "num_points": 66667,
+      "methods": {
+        "uniform": {
+          "method": "uniform",
+          "output_cell_count": 24050,
+          "cells_by_resolution_level": {
+            "0": 24050
+          },
+          "distinct_cell_sizes_m": [
+            0.2
+          ],
+          "input_points": 66667,
+          "assigned_points": 66667,
+          "assignment_rate": 1.0,
+          "out_of_envelope_points": 0,
+          "invalid_points": 0,
+          "map_generation_latency_s": 0.11689508298877627,
+          "estimated_map_storage_bytes": 2693600,
+          "estimated_map_storage_kb": 2630.46875,
+          "semantic_classes_covered": 17,
+          "distance_band_stats": {
+            "0-10m": {
+              "cell_count": 1678,
+              "point_count": 11076,
+              "semantic_classes_present": {
+                "car": 518,
+                "ground": 1070,
+                "fence": 87,
+                "unknown": 3
+              }
+            },
+            "10-30m": {
+              "cell_count": 10202,
+              "point_count": 37028,
+              "semantic_classes_present": {
+                "traffic sign 3": 18,
+                "building": 1078,
+                "pole": 42,
+                "plants": 2260,
+                "ground": 4622,
+                "bike": 478,
+                "fence": 348,
+                "traffic sign 1": 41,
+                "1 person": 42,
+                "car": 1242,
+                "2+ person": 21,
+                "rider": 10
+              }
+            },
+            "30-60m": {
+              "cell_count": 8619,
+              "point_count": 14400,
+              "semantic_classes_present": {
+                "plants": 4611,
+                "traffic sign 2": 10,
+                "ground": 828,
+                "pole": 20,
+                "building": 1614,
+                "trashcan": 20,
+                "fence": 439,
+                "car": 604,
+                "bike": 361,
+                "traffic sign 3": 4,
+                "traffic sign 1": 25,
+                "rider": 23,
+                "1 person": 44,
+                "2+ person": 8,
+                "unknown": 2,
+                "cone/stone": 6
+              }
+            },
+            "60-100m": {
+              "cell_count": 2993,
+              "point_count": 3478,
+              "semantic_classes_present": {
+                "unlabeled": 1187,
+                "building": 551,
+                "plants": 963,
+                "car": 70,
+                "pole": 9,
+                "unknown": 37,
+                "bike": 15,
+                "fence": 132,
+                "ground": 18,
+                "traffic sign 1": 6,
+                "rider": 1,
+                "1 person": 4
+              }
+            },
+            ">100m": {
+              "cell_count": 558,
+              "point_count": 685,
+              "semantic_classes_present": {
+                "unlabeled": 558
+              }
+            }
+          },
+          "timing_repeats": {
+            "repeats": 3,
+            "mean_latency_s": 0.10306350000125046,
+            "std_latency_s": 0.01135336336539687,
+            "min_latency_s": 0.09352550000767224,
+            "max_latency_s": 0.11901812499854714,
+            "output_cell_count": 24050
+          }
+        },
+        "distance_adaptive": {
+          "method": "distance_adaptive",
+          "output_cell_count": 35913,
+          "cells_by_resolution_level": {
+            "0": 35913
+          },
+          "distinct_cell_sizes_m": [
+            0.05,
+            0.1,
+            0.25,
+            0.5
+          ],
+          "input_points": 66667,
+          "assigned_points": 65975,
+          "assignment_rate": 0.9896200518997404,
+          "out_of_envelope_points": 692,
+          "invalid_points": 0,
+          "map_generation_latency_s": 0.14744079200318083,
+          "estimated_map_storage_bytes": 4022256,
+          "estimated_map_storage_kb": 3927.984375,
+          "semantic_classes_covered": 17,
+          "distance_band_stats": {
+            "0-10m": {
+              "cell_count": 7011,
+              "point_count": 11101,
+              "semantic_classes_present": {
+                "car": 2855,
+                "fence": 362,
+                "ground": 3786,
+                "unknown": 7,
+                "unlabeled": 1
+              }
+            },
+            "10-30m": {
+              "cell_count": 19584,
+              "point_count": 36993,
+              "semantic_classes_present": {
+                "bike": 792,
+                "traffic sign 3": 47,
+                "building": 2252,
+                "pole": 89,
+                "plants": 4601,
+                "ground": 8321,
+                "traffic sign 1": 108,
+                "fence": 679,
+                "1 person": 80,
+                "car": 2545,
+                "2+ person": 55,
+                "rider": 15
+              }
+            },
+            "30-60m": {
+              "cell_count": 7398,
+              "point_count": 14410,
+              "semantic_classes_present": {
+                "plants": 4024,
+                "traffic sign 2": 8,
+                "ground": 704,
+                "pole": 22,
+                "building": 1316,
+                "trashcan": 16,
+                "fence": 378,
+                "car": 492,
+                "bike": 336,
+                "traffic sign 3": 4,
+                "traffic sign 1": 26,
+                "rider": 21,
+                "1 person": 36,
+                "2+ person": 7,
+                "unknown": 3,
+                "cone/stone": 5
+              }
+            },
+            "60-100m": {
+              "cell_count": 1913,
+              "point_count": 3460,
+              "semantic_classes_present": {
+                "unlabeled": 821,
+                "building": 319,
+                "plants": 595,
+                "car": 40,
+                "pole": 4,
+                "unknown": 24,
+                "bike": 14,
+                "fence": 76,
+                "ground": 15,
+                "traffic sign 1": 3,
+                "rider": 1,
+                "1 person": 1
+              }
+            },
+            ">100m": {
+              "cell_count": 7,
+              "point_count": 11,
+              "semantic_classes_present": {
+                "unlabeled": 7
+              }
+            }
+          },
+          "timing_repeats": {
+            "repeats": 3,
+            "mean_latency_s": 0.14967751367172846,
+            "std_latency_s": 0.011104362192670943,
+            "min_latency_s": 0.13544837501831353,
+            "max_latency_s": 0.1625461250077933,
+            "output_cell_count": 35913
+          }
+        },
+        "fovea": {
+          "method": "fovea",
+          "output_cell_count": 42277,
+          "cells_by_resolution_level": {
+            "1": 13791,
+            "2": 1279,
+            "0": 27207
+          },
+          "distinct_cell_sizes_m": [
+            0.0125,
+            0.025,
+            0.05,
+            0.0625,
+            0.1,
+            0.125,
+            0.25,
+            0.5
+          ],
+          "input_points": 66667,
+          "assigned_points": 65975,
+          "assignment_rate": 0.9896200518997404,
+          "out_of_envelope_points": 692,
+          "invalid_points": 0,
+          "map_generation_latency_s": 0.45966074999887496,
+          "estimated_map_storage_bytes": 4735024,
+          "estimated_map_storage_kb": 4624.046875,
+          "semantic_classes_covered": 17,
+          "distance_band_stats": {
+            "0-10m": {
+              "cell_count": 8541,
+              "point_count": 11091,
+              "semantic_classes_present": {
+                "car": 4356,
+                "fence": 365,
+                "ground": 3812,
+                "unknown": 7,
+                "unlabeled": 1
+              }
+            },
+            "10-30m": {
+              "cell_count": 22993,
+              "point_count": 37012,
+              "semantic_classes_present": {
+                "pole": 164,
+                "building": 2997,
+                "plants": 4896,
+                "ground": 8433,
+                "traffic sign 3": 73,
+                "traffic sign 1": 156,
+                "fence": 753,
+                "1 person": 158,
+                "bike": 1059,
+                "2+ person": 139,
+                "car": 4150,
+                "rider": 15
+              }
+            },
+            "30-60m": {
+              "cell_count": 8640,
+              "point_count": 14403,
+              "semantic_classes_present": {
+                "plants": 4270,
+                "traffic sign 2": 8,
+                "ground": 733,
+                "pole": 34,
+                "building": 1672,
+                "fence": 393,
+                "traffic sign 3": 4,
+                "bike": 402,
+                "traffic sign 1": 31,
+                "car": 936,
+                "rider": 38,
+                "trashcan": 18,
+                "1 person": 70,
+                "2+ person": 23,
+                "unknown": 3,
+                "cone/stone": 5
+              }
+            },
+            "60-100m": {
+              "cell_count": 2096,
+              "point_count": 3458,
+              "semantic_classes_present": {
+                "unlabeled": 855,
+                "building": 335,
+                "plants": 683,
+                "car": 71,
+                "pole": 6,
+                "unknown": 24,
+                "bike": 14,
+                "fence": 85,
+                "ground": 15,
+                "traffic sign 1": 3,
+                "rider": 1,
+                "1 person": 4
+              }
+            },
+            ">100m": {
+              "cell_count": 7,
+              "point_count": 11,
+              "semantic_classes_present": {
+                "unlabeled": 7
+              }
+            }
+          },
+          "timing_repeats": {
+            "repeats": 3,
+            "mean_latency_s": 0.481466333323624,
+            "std_latency_s": 0.012359983002077957,
+            "min_latency_s": 0.4640041249804199,
+            "max_latency_s": 0.4908736250072252,
+            "output_cell_count": 42277
+          }
+        }
+      }
+    },
+    {
+      "frame_id": "000008",
+      "num_points": 66601,
+      "methods": {
+        "uniform": {
+          "method": "uniform",
+          "output_cell_count": 24114,
+          "cells_by_resolution_level": {
+            "0": 24114
+          },
+          "distinct_cell_sizes_m": [
+            0.2
+          ],
+          "input_points": 66601,
+          "assigned_points": 66601,
+          "assignment_rate": 1.0,
+          "out_of_envelope_points": 0,
+          "invalid_points": 0,
+          "map_generation_latency_s": 0.09330283300369047,
+          "estimated_map_storage_bytes": 2700768,
+          "estimated_map_storage_kb": 2637.46875,
+          "semantic_classes_covered": 17,
+          "distance_band_stats": {
+            "0-10m": {
+              "cell_count": 1706,
+              "point_count": 11190,
+              "semantic_classes_present": {
+                "car": 517,
+                "ground": 1079,
+                "fence": 107,
+                "unknown": 2,
+                "unlabeled": 1
+              }
+            },
+            "10-30m": {
+              "cell_count": 10180,
+              "point_count": 36933,
+              "semantic_classes_present": {
+                "traffic sign 3": 21,
+                "building": 1099,
+                "ground": 4614,
+                "pole": 39,
+                "plants": 2204,
+                "fence": 377,
+                "traffic sign 1": 41,
+                "car": 1228,
+                "1 person": 31,
+                "2+ person": 24,
+                "bike": 492,
+                "rider": 10
+              }
+            },
+            "30-60m": {
+              "cell_count": 8688,
+              "point_count": 14358,
+              "semantic_classes_present": {
+                "plants": 4649,
+                "traffic sign 2": 10,
+                "pole": 30,
+                "building": 1611,
+                "fence": 425,
+                "car": 594,
+                "ground": 855,
+                "traffic sign 3": 6,
+                "traffic sign 1": 25,
+                "trashcan": 22,
+                "rider": 24,
+                "1 person": 52,
+                "bike": 366,
+                "unknown": 4,
+                "2+ person": 10,
+                "cone/stone": 5
+              }
+            },
+            "60-100m": {
+              "cell_count": 2952,
+              "point_count": 3405,
+              "semantic_classes_present": {
+                "unlabeled": 1167,
+                "building": 534,
+                "plants": 938,
+                "pole": 7,
+                "traffic sign 1": 3,
+                "car": 62,
+                "unknown": 73,
+                "ground": 20,
+                "bike": 19,
+                "fence": 123,
+                "rider": 3,
+                "1 person": 3
+              }
+            },
+            ">100m": {
+              "cell_count": 588,
+              "point_count": 715,
+              "semantic_classes_present": {
+                "unlabeled": 588
+              }
+            }
+          },
+          "timing_repeats": {
+            "repeats": 3,
+            "mean_latency_s": 0.10783994432616358,
+            "std_latency_s": 0.008917487185481519,
+            "min_latency_s": 0.09548441699007526,
+            "max_latency_s": 0.11620587497600354,
+            "output_cell_count": 24114
+          }
+        },
+        "distance_adaptive": {
+          "method": "distance_adaptive",
+          "output_cell_count": 36058,
+          "cells_by_resolution_level": {
+            "0": 36058
+          },
+          "distinct_cell_sizes_m": [
+            0.05,
+            0.1,
+            0.25,
+            0.5
+          ],
+          "input_points": 66601,
+          "assigned_points": 65884,
+          "assignment_rate": 0.9892343958799418,
+          "out_of_envelope_points": 717,
+          "invalid_points": 0,
+          "map_generation_latency_s": 0.13408366701332852,
+          "estimated_map_storage_bytes": 4038496,
+          "estimated_map_storage_kb": 3943.84375,
+          "semantic_classes_covered": 17,
+          "distance_band_stats": {
+            "0-10m": {
+              "cell_count": 7208,
+              "point_count": 11212,
+              "semantic_classes_present": {
+                "car": 2900,
+                "ground": 3880,
+                "fence": 418,
+                "unknown": 7,
+                "unlabeled": 3
+              }
+            },
+            "10-30m": {
+              "cell_count": 19529,
+              "point_count": 36892,
+              "semantic_classes_present": {
+                "bike": 843,
+                "traffic sign 3": 46,
+                "building": 2273,
+                "pole": 80,
+                "plants": 4563,
+                "ground": 8295,
+                "traffic sign 1": 108,
+                "fence": 678,
+                "1 person": 65,
+                "2+ person": 58,
+                "car": 2504,
+                "rider": 16
+              }
+            },
+            "30-60m": {
+              "cell_count": 7432,
+              "point_count": 14375,
+              "semantic_classes_present": {
+                "plants": 4005,
+                "traffic sign 2": 9,
+                "pole": 23,
+                "building": 1317,
+                "ground": 740,
+                "car": 499,
+                "fence": 364,
+                "traffic sign 3": 5,
+                "traffic sign 1": 21,
+                "trashcan": 16,
+                "rider": 21,
+                "1 person": 44,
+                "bike": 351,
+                "unknown": 3,
+                "2+ person": 9,
+                "cone/stone": 5
+              }
+            },
+            "60-100m": {
+              "cell_count": 1884,
+              "point_count": 3398,
+              "semantic_classes_present": {
+                "unlabeled": 812,
+                "building": 320,
+                "plants": 566,
+                "pole": 4,
+                "traffic sign 1": 3,
+                "car": 35,
+                "unknown": 41,
+                "ground": 15,
+                "bike": 16,
+                "fence": 68,
+                "rider": 2,
+                "1 person": 2
+              }
+            },
+            ">100m": {
+              "cell_count": 5,
+              "point_count": 7,
+              "semantic_classes_present": {
+                "unlabeled": 5
+              }
+            }
+          },
+          "timing_repeats": {
+            "repeats": 3,
+            "mean_latency_s": 0.15862038899407102,
+            "std_latency_s": 0.00521041439107385,
+            "min_latency_s": 0.15129054198041558,
+            "max_latency_s": 0.16293925000354648,
+            "output_cell_count": 36058
+          }
+        },
+        "fovea": {
+          "method": "fovea",
+          "output_cell_count": 42397,
+          "cells_by_resolution_level": {
+            "1": 13932,
+            "0": 27223,
+            "2": 1242
+          },
+          "distinct_cell_sizes_m": [
+            0.0125,
+            0.025,
+            0.05,
+            0.0625,
+            0.1,
+            0.125,
+            0.25,
+            0.5
+          ],
+          "input_points": 66601,
+          "assigned_points": 65884,
+          "assignment_rate": 0.9892343958799418,
+          "out_of_envelope_points": 717,
+          "invalid_points": 0,
+          "map_generation_latency_s": 0.4386752910213545,
+          "estimated_map_storage_bytes": 4748464,
+          "estimated_map_storage_kb": 4637.171875,
+          "semantic_classes_covered": 17,
+          "distance_band_stats": {
+            "0-10m": {
+              "cell_count": 8772,
+              "point_count": 11206,
+              "semantic_classes_present": {
+                "car": 4431,
+                "fence": 419,
+                "ground": 3912,
+                "unknown": 7,
+                "unlabeled": 3
+              }
+            },
+            "10-30m": {
+              "cell_count": 22912,
+              "point_count": 36899,
+              "semantic_classes_present": {
+                "pole": 154,
+                "building": 3059,
+                "plants": 4865,
+                "ground": 8415,
+                "traffic sign 3": 71,
+                "traffic sign 1": 155,
+                "fence": 731,
+                "1 person": 148,
+                "bike": 1102,
+                "2+ person": 127,
+                "car": 4068,
+                "rider": 17
+              }
+            },
+            "30-60m": {
+              "cell_count": 8651,
+              "point_count": 14374,
+              "semantic_classes_present": {
+                "plants": 4231,
+                "traffic sign 2": 9,
+                "pole": 38,
+                "building": 1674,
+                "ground": 770,
+                "fence": 385,
+                "car": 936,
+                "traffic sign 3": 5,
+                "traffic sign 1": 23,
+                "trashcan": 19,
+                "rider": 38,
+                "bike": 403,
+                "1 person": 86,
+                "unknown": 3,
+                "2+ person": 26,
+                "cone/stone": 5
+              }
+            },
+            "60-100m": {
+              "cell_count": 2057,
+              "point_count": 3398,
+              "semantic_classes_present": {
+                "unlabeled": 840,
+                "building": 340,
+                "plants": 639,
+                "pole": 6,
+                "traffic sign 1": 3,
+                "car": 63,
+                "unknown": 41,
+                "ground": 16,
+                "bike": 19,
+                "fence": 85,
+                "rider": 2,
+                "1 person": 3
+              }
+            },
+            ">100m": {
+              "cell_count": 5,
+              "point_count": 7,
+              "semantic_classes_present": {
+                "unlabeled": 5
+              }
+            }
+          },
+          "timing_repeats": {
+            "repeats": 3,
+            "mean_latency_s": 0.5042068330027784,
+            "std_latency_s": 0.035176667518722636,
+            "min_latency_s": 0.4579977079993114,
+            "max_latency_s": 0.5432686659914907,
+            "output_cell_count": 42397
+          }
+        }
+      }
+    },
+    {
+      "frame_id": "000009",
+      "num_points": 66646,
+      "methods": {
+        "uniform": {
+          "method": "uniform",
+          "output_cell_count": 24056,
+          "cells_by_resolution_level": {
+            "0": 24056
+          },
+          "distinct_cell_sizes_m": [
+            0.2
+          ],
+          "input_points": 66646,
+          "assigned_points": 66646,
+          "assignment_rate": 1.0,
+          "out_of_envelope_points": 0,
+          "invalid_points": 0,
+          "map_generation_latency_s": 0.09363545800442807,
+          "estimated_map_storage_bytes": 2694272,
+          "estimated_map_storage_kb": 2631.125,
+          "semantic_classes_covered": 17,
+          "distance_band_stats": {
+            "0-10m": {
+              "cell_count": 1690,
+              "point_count": 11323,
+              "semantic_classes_present": {
+                "car": 520,
+                "ground": 1051,
+                "fence": 116,
+                "unknown": 3
+              }
+            },
+            "10-30m": {
+              "cell_count": 10182,
+              "point_count": 36825,
+              "semantic_classes_present": {
+                "traffic sign 3": 21,
+                "building": 1130,
+                "pole": 44,
+                "plants": 2170,
+                "ground": 4621,
+                "fence": 349,
+                "traffic sign 1": 44,
+                "1 person": 33,
+                "2+ person": 26,
+                "bike": 519,
+                "car": 1216,
+                "rider": 9
+              }
+            },
+            "30-60m": {
+              "cell_count": 8564,
+              "point_count": 14322,
+              "semantic_classes_present": {
+                "plants": 4565,
+                "traffic sign 2": 8,
+                "pole": 24,
+                "building": 1565,
+                "ground": 883,
+                "trashcan": 19,
+                "car": 602,
+                "fence": 428,
+                "bike": 358,
+                "traffic sign 3": 4,
+                "traffic sign 1": 19,
+                "rider": 23,
+                "1 person": 51,
+                "2+ person": 7,
+                "unknown": 3,
+                "cone/stone": 5
+              }
+            },
+            "60-100m": {
+              "cell_count": 3015,
+              "point_count": 3444,
+              "semantic_classes_present": {
+                "unlabeled": 1226,
+                "building": 534,
+                "plants": 965,
+                "car": 56,
+                "pole": 9,
+                "traffic sign 1": 10,
+                "unknown": 47,
+                "ground": 19,
+                "bike": 20,
+                "fence": 127,
+                "rider": 1,
+                "1 person": 1
+              }
+            },
+            ">100m": {
+              "cell_count": 605,
+              "point_count": 732,
+              "semantic_classes_present": {
+                "unlabeled": 605
+              }
+            }
+          },
+          "timing_repeats": {
+            "repeats": 3,
+            "mean_latency_s": 0.1003801526579385,
+            "std_latency_s": 0.01151736554779905,
+            "min_latency_s": 0.09096074997796677,
+            "max_latency_s": 0.11659770799451508,
+            "output_cell_count": 24056
+          }
+        },
+        "distance_adaptive": {
+          "method": "distance_adaptive",
+          "output_cell_count": 36083,
+          "cells_by_resolution_level": {
+            "0": 36083
+          },
+          "distinct_cell_sizes_m": [
+            0.05,
+            0.1,
+            0.25,
+            0.5
+          ],
+          "input_points": 66646,
+          "assigned_points": 65914,
+          "assignment_rate": 0.9890165951444948,
+          "out_of_envelope_points": 732,
+          "invalid_points": 0,
+          "map_generation_latency_s": 0.14432212500832975,
+          "estimated_map_storage_bytes": 4041296,
+          "estimated_map_storage_kb": 3946.578125,
+          "semantic_classes_covered": 17,
+          "distance_band_stats": {
+            "0-10m": {
+              "cell_count": 7254,
+              "point_count": 11343,
+              "semantic_classes_present": {
+                "car": 2977,
+                "ground": 3799,
+                "fence": 467,
+                "unknown": 9,
+                "unlabeled": 2
+              }
+            },
+            "10-30m": {
+              "cell_count": 19497,
+              "point_count": 36833,
+              "semantic_classes_present": {
+                "traffic sign 3": 43,
+                "building": 2336,
+                "ground": 8263,
+                "pole": 86,
+                "plants": 4484,
+                "bike": 859,
+                "traffic sign 1": 110,
+                "fence": 673,
+                "1 person": 73,
+                "2+ person": 60,
+                "car": 2492,
+                "rider": 18
+              }
+            },
+            "30-60m": {
+              "cell_count": 7422,
+              "point_count": 14298,
+              "semantic_classes_present": {
+                "plants": 4010,
+                "traffic sign 2": 7,
+                "pole": 24,
+                "building": 1317,
+                "ground": 746,
+                "trashcan": 15,
+                "fence": 376,
+                "car": 488,
+                "bike": 332,
+                "traffic sign 3": 3,
+                "traffic sign 1": 18,
+                "rider": 22,
+                "1 person": 48,
+                "2+ person": 8,
+                "unknown": 3,
+                "cone/stone": 5
+              }
+            },
+            "60-100m": {
+              "cell_count": 1910,
+              "point_count": 3440,
+              "semantic_classes_present": {
+                "unlabeled": 841,
+                "building": 312,
+                "plants": 589,
+                "car": 33,
+                "pole": 5,
+                "traffic sign 1": 6,
+                "unknown": 24,
+                "ground": 10,
+                "bike": 16,
+                "fence": 73,
+                "1 person": 1
+              }
+            }
+          },
+          "timing_repeats": {
+            "repeats": 3,
+            "mean_latency_s": 0.1487772916831697,
+            "std_latency_s": 0.0120484741087955,
+            "min_latency_s": 0.1320899590209592,
+            "max_latency_s": 0.160103958012769,
+            "output_cell_count": 36083
+          }
+        },
+        "fovea": {
+          "method": "fovea",
+          "output_cell_count": 42361,
+          "cells_by_resolution_level": {
+            "1": 13915,
+            "0": 27213,
+            "2": 1233
+          },
+          "distinct_cell_sizes_m": [
+            0.0125,
+            0.025,
+            0.05,
+            0.0625,
+            0.1,
+            0.125,
+            0.25,
+            0.5
+          ],
+          "input_points": 66646,
+          "assigned_points": 65914,
+          "assignment_rate": 0.9890165951444948,
+          "out_of_envelope_points": 732,
+          "invalid_points": 0,
+          "map_generation_latency_s": 0.4704819160106126,
+          "estimated_map_storage_bytes": 4744432,
+          "estimated_map_storage_kb": 4633.234375,
+          "semantic_classes_covered": 17,
+          "distance_band_stats": {
+            "0-10m": {
+              "cell_count": 8803,
+              "point_count": 11335,
+              "semantic_classes_present": {
+                "car": 4487,
+                "fence": 470,
+                "ground": 3835,
+                "unknown": 9,
+                "unlabeled": 2
+              }
+            },
+            "10-30m": {
+              "cell_count": 22808,
+              "point_count": 36810,
+              "semantic_classes_present": {
+                "traffic sign 3": 68,
+                "pole": 167,
+                "building": 3083,
+                "ground": 8384,
+                "plants": 4767,
+                "traffic sign 1": 151,
+                "fence": 734,
+                "1 person": 164,
+                "bike": 1119,
+                "2+ person": 137,
+                "car": 4012,
+                "rider": 22
+              }
+            },
+            "30-60m": {
+              "cell_count": 8660,
+              "point_count": 14331,
+              "semantic_classes_present": {
+                "plants": 4253,
+                "traffic sign 2": 8,
+                "pole": 37,
+                "building": 1648,
+                "ground": 775,
+                "trashcan": 18,
+                "fence": 399,
+                "traffic sign 3": 3,
+                "bike": 399,
+                "traffic sign 1": 21,
+                "rider": 41,
+                "car": 939,
+                "1 person": 84,
+                "2+ person": 27,
+                "unknown": 3,
+                "cone/stone": 5
+              }
+            },
+            "60-100m": {
+              "cell_count": 2090,
+              "point_count": 3438,
+              "semantic_classes_present": {
+                "unlabeled": 877,
+                "building": 322,
+                "plants": 667,
+                "car": 68,
+                "pole": 7,
+                "traffic sign 1": 7,
+                "unknown": 24,
+                "ground": 13,
+                "bike": 20,
+                "fence": 84,
+                "1 person": 1
+              }
+            }
+          },
+          "timing_repeats": {
+            "repeats": 3,
+            "mean_latency_s": 0.49909384732018225,
+            "std_latency_s": 0.02363643513852713,
+            "min_latency_s": 0.467627582984278,
+            "max_latency_s": 0.5245956669969019,
+            "output_cell_count": 42361
           }
         }
       }

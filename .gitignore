@@ -1,0 +1,45 @@
+# --- Datasets -----------------------------------------------------------
+# SemanticPOSS is large (multi-GB of .bin/.label point cloud frames) and is
+# NOT part of this repo -- see README.md for how to obtain and place it.
+# Keep the dataset's own small reader script (useful reference / verified
+# against in README.md) but ignore all actual sequence data.
+dataset/*
+!dataset/read_data.py
+!dataset/.gitkeep
+
+# RELLIS-3D ships as two separately-downloaded, multi-GB directory trees
+# (point clouds ~7.4GB, annotations ~1.9GB) read in place -- never copied
+# into dataset/, never committed. See README.md "RELLIS-3D setup".
+Rellis-3D/
+Rellis-3D 2/
+
+# Dataset-specific benchmark results are real measured output (not secrets),
+# but are machine/run-specific -- regenerate via `python -m src.benchmark`
+# or `?refresh=true` rather than committing a stale one. The original
+# results/benchmark_result.json (SemanticPOSS) predates this rule and stays
+# tracked for README continuity; only newer per-dataset files are ignored.
+results/benchmark_result_*.json
+
+# --- Python --------------------------------------------------------------
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+*.egg-info/
+
+# --- Frontend --------------------------------------------------------------
+frontend/node_modules/
+frontend/dist/
+frontend/.vite/
+
+# --- Env files -------------------------------------------------------------
+.env
+.env.local
+frontend/.env
+frontend/.env.local
+
+# --- OS / editor -----------------------------------------------------------
+.DS_Store
+.idea/
+.vscode/

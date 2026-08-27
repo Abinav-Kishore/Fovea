@@ -4,3 +4,17 @@ PyYAML>=6.0
 streamlit>=1.30
 plotly>=5.18
 psutil>=5.9
+
+# FastAPI backend (React frontend layer -- src/api.py)
+fastapi>=0.110
+pydantic>=2.5
+uvicorn[standard]>=0.27
+
+# API tests (tests/test_api.py)
+httpx>=0.27
+
+# Perception layer (src/perception/) -- real semantic segmentation inference.
+# CPU/MPS only, no CUDA dependency (none available on Apple Silicon).
+# Install size ~2GB; see README "Perception hardware" for why torch was
+# chosen (native arm64 wheels, no compiled extensions needed).
+torch>=2.0

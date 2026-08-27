@@ -1,0 +1,832 @@
+{
+  "timestamp": "2026-08-27T20:36:26",
+  "SemanticPOSS": {
+    "dataset": "SemanticPOSS",
+    "frames_used": [
+      "00/000000",
+      "00/000050",
+      "00/000100"
+    ],
+    "A_resolution_vs_distance": {
+      "sih_stated_anchors": {
+        "near_10m_target_cell_size_m": 0.05,
+        "by_100m_target_cell_size_m": 0.5
+      },
+      "note": "SIH gives two example anchors (~5cm near 10m, ~50cm by 100m), not a full per-band curve -- the 10-30m/30-60m figures below are the EXISTING config's own values, not independently SIH-specified. By construction, min_cell_size_m <= max_cell_size_m <= configured_band_base_cell_size_m always holds within a band (FOVEA can only refine finer than the band's base, never coarser -- see src/fovea_allocator.py's module docstring); whether the band's max actually EQUALS its base depends on whether any cell in that band stayed unsplit, which is measured, not assumed.",
+      "bands": [
+        {
+          "band": "0-10m",
+          "configured_band_base_cell_size_m": 0.05,
+          "cell_count": 20406,
+          "min_cell_size_m": 0.0125,
+          "median_cell_size_m": 0.05,
+          "max_cell_size_m": 0.05,
+          "resolution_level_distribution": {
+            "1": 7734,
+            "2": 802,
+            "0": 11870
+          },
+          "representative_resolution_level": 0
+        },
+        {
+          "band": "10-30m",
+          "configured_band_base_cell_size_m": 0.1,
+          "cell_count": 69602,
+          "min_cell_size_m": 0.025,
+          "median_cell_size_m": 0.1,
+          "max_cell_size_m": 0.1,
+          "resolution_level_distribution": {
+            "0": 46407,
+            "1": 20521,
+            "2": 2674
+          },
+          "representative_resolution_level": 0
+        },
+        {
+          "band": "30-60m",
+          "configured_band_base_cell_size_m": 0.25,
+          "cell_count": 25237,
+          "min_cell_size_m": 0.0625,
+          "median_cell_size_m": 0.25,
+          "max_cell_size_m": 0.25,
+          "resolution_level_distribution": {
+            "0": 17159,
+            "1": 7032,
+            "2": 1046
+          },
+          "representative_resolution_level": 0
+        },
+        {
+          "band": "60-100m",
+          "configured_band_base_cell_size_m": 0.5,
+          "cell_count": 6980,
+          "min_cell_size_m": 0.125,
+          "median_cell_size_m": 0.5,
+          "max_cell_size_m": 0.5,
+          "resolution_level_distribution": {
+            "0": 5312,
+            "1": 1576,
+            "2": 92
+          },
+          "representative_resolution_level": 0
+        }
+      ]
+    },
+    "B_coverage_and_conservation_last_frame": {
+      "input_points": 65831,
+      "max_observed_range_m": 199.84800720214844,
+      "coverage_reaches_100m": true,
+      "coverage_note": "Real measured max point range this frame is 199.8m -- the representation covers real data out to that range, never a claimed 100m the actual scan didn't reach.",
+      "bands": [
+        {
+          "band": "0-10m",
+          "cell_count": 5231,
+          "point_count": 7446,
+          "has_data": true
+        },
+        {
+          "band": "10-30m",
+          "cell_count": 23133,
+          "point_count": 37924,
+          "has_data": true
+        },
+        {
+          "band": "30-60m",
+          "cell_count": 8289,
+          "point_count": 14319,
+          "has_data": true
+        },
+        {
+          "band": "60-100m",
+          "cell_count": 2470,
+          "point_count": 4836,
+          "has_data": true
+        }
+      ],
+      "out_of_envelope_points": 1306,
+      "invalid_points": 0,
+      "assigned_points": 64525,
+      "assignment_rate": 0.9801613221734441,
+      "point_conservation": {
+        "input_points": 65831,
+        "assigned_points": 64525,
+        "out_of_envelope_points": 1306,
+        "invalid_points": 0,
+        "accounted_points": 65831,
+        "conserved": true
+      }
+    },
+    "C_memory_benchmark_per_frame": [
+      {
+        "sequence": "00",
+        "frame_id": "000000",
+        "assumptions": "Same real frame (points/labels), same cfg -- uniform uses cfg['uniform']['cell_size_m'] (the existing high-resolution baseline cell size, currently 0.2m), FOVEA uses its own adaptive allocation. Uniform has NO distance envelope, so it in fact covers MORE far-range area than FOVEA's envelope -- a real asymmetry in uniform's favor, stated here rather than hidden.",
+        "uniform": {
+          "cell_size_m": 0.2,
+          "output_cell_count": 23954,
+          "estimated_storage_bytes": 2682848,
+          "assigned_points": 66658,
+          "mean_build_latency_s": 0.15726612500293413
+        },
+        "fovea": {
+          "output_cell_count": 41868,
+          "estimated_storage_bytes": 4689216,
+          "assigned_points": 66016,
+          "mean_build_latency_s": 0.5648086669971235,
+          "fvch1_serialized_payload_bytes": 3342103,
+          "fvch1_chunk_count": 35552,
+          "fvch1_note": "FOVEA-only figure -- uniform has no chunk/streaming representation to compare against."
+        },
+        "cell_count_reduction_factor_uniform_over_fovea": 0.5721314607815038,
+        "estimated_storage_reduction_factor_uniform_over_fovea": 0.5721314607815038
+      },
+      {
+        "sequence": "00",
+        "frame_id": "000050",
+        "assumptions": "Same real frame (points/labels), same cfg -- uniform uses cfg['uniform']['cell_size_m'] (the existing high-resolution baseline cell size, currently 0.2m), FOVEA uses its own adaptive allocation. Uniform has NO distance envelope, so it in fact covers MORE far-range area than FOVEA's envelope -- a real asymmetry in uniform's favor, stated here rather than hidden.",
+        "uniform": {
+          "cell_size_m": 0.2,
+          "output_cell_count": 24729,
+          "estimated_storage_bytes": 2769648,
+          "assigned_points": 65377,
+          "mean_build_latency_s": 0.15459349999946426
+        },
+        "fovea": {
+          "output_cell_count": 41234,
+          "estimated_storage_bytes": 4618208,
+          "assigned_points": 64389,
+          "mean_build_latency_s": 0.505529583999305,
+          "fvch1_serialized_payload_bytes": 3340975,
+          "fvch1_chunk_count": 35540,
+          "fvch1_note": "FOVEA-only figure -- uniform has no chunk/streaming representation to compare against."
+        },
+        "cell_count_reduction_factor_uniform_over_fovea": 0.599723529126449,
+        "estimated_storage_reduction_factor_uniform_over_fovea": 0.599723529126449
+      },
+      {
+        "sequence": "00",
+        "frame_id": "000100",
+        "assumptions": "Same real frame (points/labels), same cfg -- uniform uses cfg['uniform']['cell_size_m'] (the existing high-resolution baseline cell size, currently 0.2m), FOVEA uses its own adaptive allocation. Uniform has NO distance envelope, so it in fact covers MORE far-range area than FOVEA's envelope -- a real asymmetry in uniform's favor, stated here rather than hidden.",
+        "uniform": {
+          "cell_size_m": 0.2,
+          "output_cell_count": 24354,
+          "estimated_storage_bytes": 2727648,
+          "assigned_points": 65831,
+          "mean_build_latency_s": 0.09626833299989812
+        },
+        "fovea": {
+          "output_cell_count": 39123,
+          "estimated_storage_bytes": 4381776,
+          "assigned_points": 64525,
+          "mean_build_latency_s": 0.4987228329991922,
+          "fvch1_serialized_payload_bytes": 3152787,
+          "fvch1_chunk_count": 33538,
+          "fvch1_note": "FOVEA-only figure -- uniform has no chunk/streaming representation to compare against."
+        },
+        "cell_count_reduction_factor_uniform_over_fovea": 0.6224982746721878,
+        "estimated_storage_reduction_factor_uniform_over_fovea": 0.6224982746721878
+      }
+    ],
+    "D_pipeline_latency_per_frame": [
+      {
+        "sequence": "00",
+        "frame_id": "000000",
+        "perception_ms": 323.38870799867436,
+        "fovea_build_s": 0.5380176670005312,
+        "hierarchy_build_s": 0.15868150000096648,
+        "lod_selection_s": 0.04213362500013318,
+        "chunk_serialization_s": 0.2536341659979371,
+        "backend_total_s": 1.3158556659982423,
+        "process_rss_mb_before": 508.265625,
+        "process_rss_mb_after": 563.203125,
+        "process_rss_mb_delta": 54.9375,
+        "frontend_cited_not_remeasured": {
+          "decode_ms_range_from_phase_3d_browser_validation": [
+            8,
+            16
+          ],
+          "fps_from_phase_4ab_browser_validation": 29,
+          "fps_is_representative_of_real_gpu_hardware": false,
+          "fps_provenance": "headless Chromium, CPU-side SwiftShader software rendering -- explicitly NOT a hardware performance claim (see README Phase 4AB section).",
+          "provenance": "Not re-measured in this benchmark run (Python-only, no browser). Cited from the real browser measurements already recorded in README's Phase 3D and Phase 4AB sections."
+        }
+      },
+      {
+        "sequence": "00",
+        "frame_id": "000050",
+        "perception_ms": 87.9474579996895,
+        "fovea_build_s": 0.5088463329993829,
+        "hierarchy_build_s": 0.16219833299692255,
+        "lod_selection_s": 0.041388958001334686,
+        "chunk_serialization_s": 0.2416086669982178,
+        "backend_total_s": 1.0419897489955474,
+        "process_rss_mb_before": 629.40625,
+        "process_rss_mb_after": 625.109375,
+        "process_rss_mb_delta": -4.296875,
+        "frontend_cited_not_remeasured": {
+          "decode_ms_range_from_phase_3d_browser_validation": [
+            8,
+            16
+          ],
+          "fps_from_phase_4ab_browser_validation": 29,
+          "fps_is_representative_of_real_gpu_hardware": false,
+          "fps_provenance": "headless Chromium, CPU-side SwiftShader software rendering -- explicitly NOT a hardware performance claim (see README Phase 4AB section).",
+          "provenance": "Not re-measured in this benchmark run (Python-only, no browser). Cited from the real browser measurements already recorded in README's Phase 3D and Phase 4AB sections."
+        }
+      },
+      {
+        "sequence": "00",
+        "frame_id": "000100",
+        "perception_ms": 91.40712500084192,
+        "fovea_build_s": 0.47770587500053807,
+        "hierarchy_build_s": 0.1534067499997036,
+        "lod_selection_s": 0.03630883299774723,
+        "chunk_serialization_s": 0.2983591249976598,
+        "backend_total_s": 1.0571877079964906,
+        "process_rss_mb_before": 629.9375,
+        "process_rss_mb_after": 655.671875,
+        "process_rss_mb_delta": 25.734375,
+        "frontend_cited_not_remeasured": {
+          "decode_ms_range_from_phase_3d_browser_validation": [
+            8,
+            16
+          ],
+          "fps_from_phase_4ab_browser_validation": 29,
+          "fps_is_representative_of_real_gpu_hardware": false,
+          "fps_provenance": "headless Chromium, CPU-side SwiftShader software rendering -- explicitly NOT a hardware performance claim (see README Phase 4AB section).",
+          "provenance": "Not re-measured in this benchmark run (Python-only, no browser). Cited from the real browser measurements already recorded in README's Phase 3D and Phase 4AB sections."
+        }
+      }
+    ],
+    "F_terrain_obstacle_per_frame": [
+      {
+        "sequence": "00",
+        "frame_id": "000000",
+        "label_source": "ground_truth",
+        "source": "SemanticPOSS",
+        "note": "Semantic-DERIVED classification via Phase 2's terrain.py/obstacle.py rule tables -- NOT validated against real terrain ground truth (neither dataset has any; see src/spatial/map_2_5d.py's own docstring). potential_dynamic_obstacle is a semantic-category proxy, not real motion detection (documented since Phase 0).",
+        "total_cells": 41868,
+        "drivable_cells": 12685,
+        "non_drivable_cells": 9972,
+        "obstacle_cells": 18306,
+        "unknown_terrain_cells": 905,
+        "static_obstacle_cells": 6748,
+        "potential_dynamic_obstacle_cells": 11558
+      },
+      {
+        "sequence": "00",
+        "frame_id": "000050",
+        "label_source": "ground_truth",
+        "source": "SemanticPOSS",
+        "note": "Semantic-DERIVED classification via Phase 2's terrain.py/obstacle.py rule tables -- NOT validated against real terrain ground truth (neither dataset has any; see src/spatial/map_2_5d.py's own docstring). potential_dynamic_obstacle is a semantic-category proxy, not real motion detection (documented since Phase 0).",
+        "total_cells": 41234,
+        "drivable_cells": 13466,
+        "non_drivable_cells": 9735,
+        "obstacle_cells": 16929,
+        "unknown_terrain_cells": 1104,
+        "static_obstacle_cells": 6539,
+        "potential_dynamic_obstacle_cells": 10390
+      },
+      {
+        "sequence": "00",
+        "frame_id": "000100",
+        "label_source": "ground_truth",
+        "source": "SemanticPOSS",
+        "note": "Semantic-DERIVED classification via Phase 2's terrain.py/obstacle.py rule tables -- NOT validated against real terrain ground truth (neither dataset has any; see src/spatial/map_2_5d.py's own docstring). potential_dynamic_obstacle is a semantic-category proxy, not real motion detection (documented since Phase 0).",
+        "total_cells": 39123,
+        "drivable_cells": 12629,
+        "non_drivable_cells": 9952,
+        "obstacle_cells": 15472,
+        "unknown_terrain_cells": 1070,
+        "static_obstacle_cells": 6452,
+        "potential_dynamic_obstacle_cells": 9020
+      }
+    ]
+  },
+  "RELLIS-3D": {
+    "dataset": "RELLIS-3D",
+    "frames_used": [
+      "00000/000100",
+      "00002/000500",
+      "00004/000050"
+    ],
+    "A_resolution_vs_distance": {
+      "sih_stated_anchors": {
+        "near_10m_target_cell_size_m": 0.05,
+        "by_100m_target_cell_size_m": 0.5
+      },
+      "note": "SIH gives two example anchors (~5cm near 10m, ~50cm by 100m), not a full per-band curve -- the 10-30m/30-60m figures below are the EXISTING config's own values, not independently SIH-specified. By construction, min_cell_size_m <= max_cell_size_m <= configured_band_base_cell_size_m always holds within a band (FOVEA can only refine finer than the band's base, never coarser -- see src/fovea_allocator.py's module docstring); whether the band's max actually EQUALS its base depends on whether any cell in that band stayed unsplit, which is measured, not assumed.",
+      "bands": [
+        {
+          "band": "0-10m",
+          "configured_band_base_cell_size_m": 0.05,
+          "cell_count": 25998,
+          "min_cell_size_m": 0.0125,
+          "median_cell_size_m": 0.05,
+          "max_cell_size_m": 0.05,
+          "resolution_level_distribution": {
+            "0": 24229,
+            "1": 587,
+            "2": 1182
+          },
+          "representative_resolution_level": 0
+        },
+        {
+          "band": "10-30m",
+          "configured_band_base_cell_size_m": 0.1,
+          "cell_count": 26171,
+          "min_cell_size_m": 0.025,
+          "median_cell_size_m": 0.1,
+          "max_cell_size_m": 0.1,
+          "resolution_level_distribution": {
+            "0": 25539,
+            "1": 345,
+            "2": 287
+          },
+          "representative_resolution_level": 0
+        },
+        {
+          "band": "30-60m",
+          "configured_band_base_cell_size_m": 0.25,
+          "cell_count": 4712,
+          "min_cell_size_m": 0.0625,
+          "median_cell_size_m": 0.25,
+          "max_cell_size_m": 0.25,
+          "resolution_level_distribution": {
+            "0": 4529,
+            "1": 106,
+            "2": 77
+          },
+          "representative_resolution_level": 0
+        },
+        {
+          "band": "60-100m",
+          "configured_band_base_cell_size_m": 0.5,
+          "cell_count": 1843,
+          "min_cell_size_m": 0.25,
+          "median_cell_size_m": 0.5,
+          "max_cell_size_m": 0.5,
+          "resolution_level_distribution": {
+            "0": 1702,
+            "1": 141
+          },
+          "representative_resolution_level": 0
+        }
+      ]
+    },
+    "B_coverage_and_conservation_last_frame": {
+      "input_points": 36049,
+      "max_observed_range_m": 129.3560028076172,
+      "coverage_reaches_100m": true,
+      "coverage_note": "Real measured max point range this frame is 129.4m -- the representation covers real data out to that range, never a claimed 100m the actual scan didn't reach.",
+      "bands": [
+        {
+          "band": "0-10m",
+          "cell_count": 8167,
+          "point_count": 21179,
+          "has_data": true
+        },
+        {
+          "band": "10-30m",
+          "cell_count": 7729,
+          "point_count": 11987,
+          "has_data": true
+        },
+        {
+          "band": "30-60m",
+          "cell_count": 1336,
+          "point_count": 1748,
+          "has_data": true
+        },
+        {
+          "band": "60-100m",
+          "cell_count": 432,
+          "point_count": 603,
+          "has_data": true
+        }
+      ],
+      "out_of_envelope_points": 532,
+      "invalid_points": 0,
+      "assigned_points": 35517,
+      "assignment_rate": 0.9852423090793088,
+      "point_conservation": {
+        "input_points": 36049,
+        "assigned_points": 35517,
+        "out_of_envelope_points": 532,
+        "invalid_points": 0,
+        "accounted_points": 36049,
+        "conserved": true
+      }
+    },
+    "C_memory_benchmark_per_frame": [
+      {
+        "sequence": "00000",
+        "frame_id": "000100",
+        "assumptions": "Same real frame (points/labels), same cfg -- uniform uses cfg['uniform']['cell_size_m'] (the existing high-resolution baseline cell size, currently 0.2m), FOVEA uses its own adaptive allocation. Uniform has NO distance envelope, so it in fact covers MORE far-range area than FOVEA's envelope -- a real asymmetry in uniform's favor, stated here rather than hidden.",
+        "uniform": {
+          "cell_size_m": 0.2,
+          "output_cell_count": 10735,
+          "estimated_storage_bytes": 1202320,
+          "assigned_points": 37337,
+          "mean_build_latency_s": 0.04759220800042385
+        },
+        "fovea": {
+          "output_cell_count": 19335,
+          "estimated_storage_bytes": 2165520,
+          "assigned_points": 37232,
+          "mean_build_latency_s": 0.2619981669995468,
+          "fvch1_serialized_payload_bytes": 1787067,
+          "fvch1_chunk_count": 19010,
+          "fvch1_note": "FOVEA-only figure -- uniform has no chunk/streaming representation to compare against."
+        },
+        "cell_count_reduction_factor_uniform_over_fovea": 0.5552107576933023,
+        "estimated_storage_reduction_factor_uniform_over_fovea": 0.5552107576933023
+      },
+      {
+        "sequence": "00002",
+        "frame_id": "000500",
+        "assumptions": "Same real frame (points/labels), same cfg -- uniform uses cfg['uniform']['cell_size_m'] (the existing high-resolution baseline cell size, currently 0.2m), FOVEA uses its own adaptive allocation. Uniform has NO distance envelope, so it in fact covers MORE far-range area than FOVEA's envelope -- a real asymmetry in uniform's favor, stated here rather than hidden.",
+        "uniform": {
+          "cell_size_m": 0.2,
+          "output_cell_count": 10689,
+          "estimated_storage_bytes": 1197168,
+          "assigned_points": 40326,
+          "mean_build_latency_s": 0.04712166699755471
+        },
+        "fovea": {
+          "output_cell_count": 21725,
+          "estimated_storage_bytes": 2433200,
+          "assigned_points": 40228,
+          "mean_build_latency_s": 0.24596087500322028,
+          "fvch1_serialized_payload_bytes": 1995734,
+          "fvch1_chunk_count": 21230,
+          "fvch1_note": "FOVEA-only figure -- uniform has no chunk/streaming representation to compare against."
+        },
+        "cell_count_reduction_factor_uniform_over_fovea": 0.4920138089758343,
+        "estimated_storage_reduction_factor_uniform_over_fovea": 0.4920138089758343
+      },
+      {
+        "sequence": "00004",
+        "frame_id": "000050",
+        "assumptions": "Same real frame (points/labels), same cfg -- uniform uses cfg['uniform']['cell_size_m'] (the existing high-resolution baseline cell size, currently 0.2m), FOVEA uses its own adaptive allocation. Uniform has NO distance envelope, so it in fact covers MORE far-range area than FOVEA's envelope -- a real asymmetry in uniform's favor, stated here rather than hidden.",
+        "uniform": {
+          "cell_size_m": 0.2,
+          "output_cell_count": 9342,
+          "estimated_storage_bytes": 1046304,
+          "assigned_points": 36049,
+          "mean_build_latency_s": 0.09530512499986799
+        },
+        "fovea": {
+          "output_cell_count": 17664,
+          "estimated_storage_bytes": 1978368,
+          "assigned_points": 35517,
+          "mean_build_latency_s": 0.2662876670001424,
+          "fvch1_serialized_payload_bytes": 1587019,
+          "fvch1_chunk_count": 16882,
+          "fvch1_note": "FOVEA-only figure -- uniform has no chunk/streaming representation to compare against."
+        },
+        "cell_count_reduction_factor_uniform_over_fovea": 0.5288722826086957,
+        "estimated_storage_reduction_factor_uniform_over_fovea": 0.5288722826086957
+      }
+    ],
+    "D_pipeline_latency_per_frame": [
+      {
+        "sequence": "00000",
+        "frame_id": "000100",
+        "perception_ms": 70.7869159996335,
+        "fovea_build_s": 0.2121510409997427,
+        "hierarchy_build_s": 0.0781607079989044,
+        "lod_selection_s": 0.021011666998674627,
+        "chunk_serialization_s": 0.0838307080011873,
+        "backend_total_s": 0.4659410399981425,
+        "process_rss_mb_before": 559.015625,
+        "process_rss_mb_after": 558.03125,
+        "process_rss_mb_delta": -0.984375,
+        "frontend_cited_not_remeasured": {
+          "decode_ms_range_from_phase_3d_browser_validation": [
+            8,
+            16
+          ],
+          "fps_from_phase_4ab_browser_validation": 29,
+          "fps_is_representative_of_real_gpu_hardware": false,
+          "fps_provenance": "headless Chromium, CPU-side SwiftShader software rendering -- explicitly NOT a hardware performance claim (see README Phase 4AB section).",
+          "provenance": "Not re-measured in this benchmark run (Python-only, no browser). Cited from the real browser measurements already recorded in README's Phase 3D and Phase 4AB sections."
+        }
+      },
+      {
+        "sequence": "00002",
+        "frame_id": "000500",
+        "perception_ms": 74.24199999877601,
+        "fovea_build_s": 0.30652741599988076,
+        "hierarchy_build_s": 0.033750209000572795,
+        "lod_selection_s": 0.023946249999426072,
+        "chunk_serialization_s": 0.19369808299961733,
+        "backend_total_s": 0.632163957998273,
+        "process_rss_mb_before": 566.125,
+        "process_rss_mb_after": 556.453125,
+        "process_rss_mb_delta": -9.671875,
+        "frontend_cited_not_remeasured": {
+          "decode_ms_range_from_phase_3d_browser_validation": [
+            8,
+            16
+          ],
+          "fps_from_phase_4ab_browser_validation": 29,
+          "fps_is_representative_of_real_gpu_hardware": false,
+          "fps_provenance": "headless Chromium, CPU-side SwiftShader software rendering -- explicitly NOT a hardware performance claim (see README Phase 4AB section).",
+          "provenance": "Not re-measured in this benchmark run (Python-only, no browser). Cited from the real browser measurements already recorded in README's Phase 3D and Phase 4AB sections."
+        }
+      },
+      {
+        "sequence": "00004",
+        "frame_id": "000050",
+        "perception_ms": 71.72454199826461,
+        "fovea_build_s": 0.2641738750025979,
+        "hierarchy_build_s": 0.07601479100048891,
+        "lod_selection_s": 0.01960579200022039,
+        "chunk_serialization_s": 0.0815473340007884,
+        "backend_total_s": 0.5130663340023602,
+        "process_rss_mb_before": 540.390625,
+        "process_rss_mb_after": 526.359375,
+        "process_rss_mb_delta": -14.03125,
+        "frontend_cited_not_remeasured": {
+          "decode_ms_range_from_phase_3d_browser_validation": [
+            8,
+            16
+          ],
+          "fps_from_phase_4ab_browser_validation": 29,
+          "fps_is_representative_of_real_gpu_hardware": false,
+          "fps_provenance": "headless Chromium, CPU-side SwiftShader software rendering -- explicitly NOT a hardware performance claim (see README Phase 4AB section).",
+          "provenance": "Not re-measured in this benchmark run (Python-only, no browser). Cited from the real browser measurements already recorded in README's Phase 3D and Phase 4AB sections."
+        }
+      }
+    ],
+    "F_terrain_obstacle_per_frame": [
+      {
+        "sequence": "00000",
+        "frame_id": "000100",
+        "label_source": "ground_truth",
+        "source": "RELLIS-3D",
+        "note": "Semantic-DERIVED classification via Phase 2's terrain.py/obstacle.py rule tables -- NOT validated against real terrain ground truth (neither dataset has any; see src/spatial/map_2_5d.py's own docstring). potential_dynamic_obstacle is a semantic-category proxy, not real motion detection (documented since Phase 0).",
+        "total_cells": 19335,
+        "drivable_cells": 7042,
+        "non_drivable_cells": 2586,
+        "obstacle_cells": 5761,
+        "unknown_terrain_cells": 3946,
+        "static_obstacle_cells": 5604,
+        "potential_dynamic_obstacle_cells": 157
+      },
+      {
+        "sequence": "00002",
+        "frame_id": "000500",
+        "label_source": "ground_truth",
+        "source": "RELLIS-3D",
+        "note": "Semantic-DERIVED classification via Phase 2's terrain.py/obstacle.py rule tables -- NOT validated against real terrain ground truth (neither dataset has any; see src/spatial/map_2_5d.py's own docstring). potential_dynamic_obstacle is a semantic-category proxy, not real motion detection (documented since Phase 0).",
+        "total_cells": 21725,
+        "drivable_cells": 9293,
+        "non_drivable_cells": 5454,
+        "obstacle_cells": 1048,
+        "unknown_terrain_cells": 5930,
+        "static_obstacle_cells": 209,
+        "potential_dynamic_obstacle_cells": 839
+      },
+      {
+        "sequence": "00004",
+        "frame_id": "000050",
+        "label_source": "ground_truth",
+        "source": "RELLIS-3D",
+        "note": "Semantic-DERIVED classification via Phase 2's terrain.py/obstacle.py rule tables -- NOT validated against real terrain ground truth (neither dataset has any; see src/spatial/map_2_5d.py's own docstring). potential_dynamic_obstacle is a semantic-category proxy, not real motion detection (documented since Phase 0).",
+        "total_cells": 17664,
+        "drivable_cells": 4763,
+        "non_drivable_cells": 6601,
+        "obstacle_cells": 1677,
+        "unknown_terrain_cells": 4623,
+        "static_obstacle_cells": 1231,
+        "potential_dynamic_obstacle_cells": 446
+      }
+    ]
+  },
+  "E_perception_distance_bands": {
+    "SemanticPOSS": {
+      "dataset": "SemanticPOSS",
+      "model_ontology": "semantickitti-20",
+      "per_frame": [
+        {
+          "sequence": "00",
+          "frame_id": "000000",
+          "available": true,
+          "num_points_total": 66658,
+          "overall_accuracy": 0.40193888630370717,
+          "mean_iou": 0.12960746343377,
+          "model_coverage": 0.9992244454785172,
+          "distance_bands": {
+            "0-10": {
+              "band": "0-10",
+              "point_count": 10062,
+              "accuracy": 0.7940767243092824,
+              "mean_iou": 0.2106582014569442
+            },
+            "10-30": {
+              "band": "10-30",
+              "point_count": 37547,
+              "accuracy": 0.384344954323914,
+              "mean_iou": 0.1298070868529769
+            },
+            "30-60": {
+              "band": "30-60",
+              "point_count": 14754,
+              "accuracy": 0.20523247932763997,
+              "mean_iou": 0.06662698087570991
+            },
+            "60-100": {
+              "band": "60-100",
+              "point_count": 2107,
+              "accuracy": 0.22021831988609397,
+              "mean_iou": 0.03976983777291325
+            }
+          }
+        },
+        {
+          "sequence": "00",
+          "frame_id": "000050",
+          "available": true,
+          "num_points_total": 65377,
+          "overall_accuracy": 0.4666166062213417,
+          "mean_iou": 0.15656602614045106,
+          "model_coverage": 0.9991851863686473,
+          "distance_bands": {
+            "0-10": {
+              "band": "0-10",
+              "point_count": 9160,
+              "accuracy": 0.8968340611353712,
+              "mean_iou": 0.26863486263003555
+            },
+            "10-30": {
+              "band": "10-30",
+              "point_count": 37655,
+              "accuracy": 0.4413756473243925,
+              "mean_iou": 0.14282011827169575
+            },
+            "30-60": {
+              "band": "30-60",
+              "point_count": 13306,
+              "accuracy": 0.29911318202314746,
+              "mean_iou": 0.10212793415183856
+            },
+            "60-100": {
+              "band": "60-100",
+              "point_count": 2467,
+              "accuracy": 0.15849209566274827,
+              "mean_iou": 0.03576049456188241
+            }
+          }
+        },
+        {
+          "sequence": "00",
+          "frame_id": "000100",
+          "available": true,
+          "num_points_total": 65831,
+          "overall_accuracy": 0.4212344171700296,
+          "mean_iou": 0.14905634510399093,
+          "model_coverage": 0.9992610204343915,
+          "distance_bands": {
+            "0-10": {
+              "band": "0-10",
+              "point_count": 7385,
+              "accuracy": 0.735003385240352,
+              "mean_iou": 0.16676107740593277
+            },
+            "10-30": {
+              "band": "10-30",
+              "point_count": 37922,
+              "accuracy": 0.4317019144559886,
+              "mean_iou": 0.1503780025755684
+            },
+            "30-60": {
+              "band": "30-60",
+              "point_count": 14316,
+              "accuracy": 0.2822715842414082,
+              "mean_iou": 0.10500738982714153
+            },
+            "60-100": {
+              "band": "60-100",
+              "point_count": 2624,
+              "accuracy": 0.1448170731707317,
+              "mean_iou": 0.022934187351241975
+            }
+          }
+        }
+      ]
+    },
+    "RELLIS-3D": {
+      "dataset": "RELLIS-3D",
+      "model_ontology": "semantickitti-20",
+      "per_frame": [
+        {
+          "sequence": "00000",
+          "frame_id": "000100",
+          "available": true,
+          "num_points_total": 37337,
+          "overall_accuracy": 0.09983263219794636,
+          "mean_iou": 0.03039493575602507,
+          "model_coverage": 0.9856606504727009,
+          "distance_bands": {
+            "0-10": {
+              "band": "0-10",
+              "point_count": 6478,
+              "accuracy": 0.0,
+              "mean_iou": 0.0
+            },
+            "10-30": {
+              "band": "10-30",
+              "point_count": 14452,
+              "accuracy": 0.12717962911707723,
+              "mean_iou": 0.041813029212435085
+            },
+            "30-60": {
+              "band": "30-60",
+              "point_count": 1159,
+              "accuracy": 0.3175150992234685,
+              "mean_iou": 0.055601464974724034
+            },
+            "60-100": {
+              "band": "60-100",
+              "point_count": 18,
+              "accuracy": 0.05555555555555555,
+              "mean_iou": 0.013888888888888888
+            }
+          }
+        },
+        {
+          "sequence": "00002",
+          "frame_id": "000500",
+          "available": true,
+          "num_points_total": 40326,
+          "overall_accuracy": 0.12016378373861453,
+          "mean_iou": 0.034239877570278014,
+          "model_coverage": 0.9997910921701345,
+          "distance_bands": {
+            "0-10": {
+              "band": "0-10",
+              "point_count": 12696,
+              "accuracy": 0.015674228103339634,
+              "mean_iou": 0.0016684832732455773
+            },
+            "10-30": {
+              "band": "10-30",
+              "point_count": 9725,
+              "accuracy": 0.2629305912596401,
+              "mean_iou": 0.041096110575377695
+            },
+            "30-60": {
+              "band": "30-60",
+              "point_count": 1041,
+              "accuracy": 0.10566762728146013,
+              "mean_iou": 0.01612612533665165
+            },
+            "60-100": {
+              "band": "60-100",
+              "point_count": 472,
+              "accuracy": 0.0211864406779661,
+              "mean_iou": 0.00423728813559322
+            }
+          }
+        },
+        {
+          "sequence": "00004",
+          "frame_id": "000050",
+          "available": true,
+          "num_points_total": 36049,
+          "overall_accuracy": 0.0012367995433355532,
+          "mean_iou": 0.00012736482183620882,
+          "model_coverage": 0.9154695081343355,
+          "distance_bands": {
+            "0-10": {
+              "band": "0-10",
+              "point_count": 10033,
+              "accuracy": 0.0005980265125087212,
+              "mean_iou": 7.717041800643087e-05
+            },
+            "10-30": {
+              "band": "10-30",
+              "point_count": 10441,
+              "accuracy": 0.00038310506656450533,
+              "mean_iou": 3.552871164009415e-05
+            },
+            "30-60": {
+              "band": "30-60",
+              "point_count": 544,
+              "accuracy": 0.029411764705882353,
+              "mean_iou": 0.003676470588235294
+            },
+            "60-100": {
+              "band": "60-100",
+              "point_count": 4,
+              "accuracy": 0.0,
+              "mean_iou": 0.0
+            }
+          }
+        }
+      ]
+    }
+  }
+}

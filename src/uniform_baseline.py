@@ -9,7 +9,10 @@ from src.geometry import cell_index
 from src.map_structure import Cell, aggregate_points_to_cells
 
 
-def build_uniform_map(points, semantic_labels, cfg) -> tuple[list[Cell], dict]:
+def build_uniform_map(points, semantic_labels, cfg, label_dict: dict | None = None) -> tuple[list[Cell], dict]:
+    """`label_dict` is OPTIONAL (defaults to SemanticPOSS's LABEL_DICT) so a
+    different dataset (e.g. RELLIS-3D) can resolve class names correctly --
+    see src/map_structure.py's aggregate_points_to_cells docstring."""
     t0 = time.perf_counter()
     origin = (cfg["origin"]["x"], cfg["origin"]["y"])
     cell_size_m = float(cfg["uniform"]["cell_size_m"])
@@ -27,6 +30,7 @@ def build_uniform_map(points, semantic_labels, cfg) -> tuple[list[Cell], dict]:
         points, semantic_labels, ix, iy, cell_size, resolution_level, band_id,
         origin, fovea_cfg["semantic_priority"], set(fovea_cfg["dynamic_classes"]),
         fovea_cfg["geometry"]["max_expected_std_m"], fovea_cfg["weights"],
+        label_dict=label_dict,
     )
     accounting = {
         "input_points": n_total_input,
