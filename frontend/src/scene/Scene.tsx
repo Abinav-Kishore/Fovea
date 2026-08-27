@@ -3,12 +3,18 @@ import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { Grid, OrbitControls, PerspectiveCamera } from "@react-three/drei";
 import type { OrbitControls as OrbitControlsImpl } from "three-stdlib";
 import * as THREE from "three";
-import type { Cell, PointsResponse } from "../api/types";
+import type { Cell, DatasetName, PointsResponse } from "../api/types";
+import type { ChunkInfo } from "../api/fvch1";
 import type { ViewMode } from "../constants";
 import { CellField } from "./CellField";
+import { ChunkField, type StreamingTelemetry } from "./ChunkField";
 import { PointCloud } from "./PointCloud";
 
-export type OverlayMode = "raw" | "overlay" | "fovea";
+// "streaming" (Phase 3D) renders the LOD-selected chunk frontier
+// (hierarchy -> select_lod_nodes -> /chunks -> FVCH1 decode) via ChunkField
+// instead of the full FOVEA cell list -- raw/overlay/fovea are UNCHANGED,
+// still backed by the existing full /map/fovea fetch (useFrameData).
+export type OverlayMode = "raw" | "overlay" | "fovea" | "streaming";
 export type CameraPreset = "perspective" | "top" | "front";
 
 interface SceneProps {
@@ -22,6 +28,13 @@ interface SceneProps {
   framingRadius: number;
   /** Bump this to re-apply the current preset even if it didn't change (Reset View). */
   cameraToken: { preset: CameraPreset; nonce: number };
+  /** Only needed for overlayMode === "streaming" -- ChunkField calls
+   * GET .../chunks itself, so it needs to know which frame to ask for. */
+  dataset: DatasetName;
+  sequence: string;
+  frameId: string | null;
+  onChunkSelect?: (info: ChunkInfo | null) => void;
+  onStreamingTelemetry?: (t: StreamingTelemetry) => void;
 }
 
 function SensorOrigin() {
@@ -110,12 +123,24 @@ export function Scene({
   onSelect,
   framingRadius,
   cameraToken,
+  dataset,
+  sequence,
+  frameId,
+  onChunkSelect,
+  onStreamingTelemetry,
 }: SceneProps) {
   const controlsRef = useRef<OrbitControlsImpl>(null);
   const showPoints = overlayMode === "raw" || overlayMode === "overlay";
   const showCells = overlayMode === "overlay" || overlayMode === "fovea";
-  const cellOpacity = overlayMode === "overlay" ? 0.62 : 1;
-  const pointOpacity = overlayMode === "overlay" ? 0.32 : 0.55;
+  const showStreaming = overlayMode === "streaming";
+  // Phase 4AB: RAW + FOVEA is meant to read as "real point cloud, FOVEA
+  // structure lightly overlaid on top" -- not a solid tile layer that hides
+  // the sensor geometry underneath it. Points stay close to full brightness
+  // in every points-visible mode; the FOVEA fill/border opacity is what
+  // drops in "overlay" (fine/medium/coarse colors from RESOLUTION_COLORS
+  // stay clearly distinguishable at this opacity against the dark background).
+  const cellOpacity = overlayMode === "overlay" ? 0.4 : 1;
+  const pointOpacity = overlayMode === "overlay" ? 0.6 : 0.62;
 
   return (
     <Canvas dpr={[1, 1.5]} gl={{ antialias: true }} shadows={false}>
@@ -153,7 +178,13 @@ export function Scene({
 
       <Suspense fallback={null}>
         {points && showPoints && (
-          <PointCloud points={points} elevationOffset={elevationOffset} visible opacity={pointOpacity} />
+          <PointCloud
+            points={points}
+            elevationOffset={elevationOffset}
+            visible
+            opacity={pointOpacity}
+            viewMode={viewMode}
+          />
         )}
         {showCells && (
           <CellField
@@ -163,6 +194,17 @@ export function Scene({
             selectedIndex={selectedIndex}
             onSelect={onSelect}
             opacity={cellOpacity}
+          />
+        )}
+        {showStreaming && (
+          <ChunkField
+            dataset={dataset}
+            sequence={sequence}
+            frameId={frameId}
+            viewMode={viewMode}
+            elevationOffset={elevationOffset}
+            onSelect={onChunkSelect}
+            onTelemetry={onStreamingTelemetry}
           />
         )}
       </Suspense>

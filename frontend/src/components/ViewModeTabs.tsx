@@ -1,7 +1,8 @@
-import { Layers, Mountain, Radar, Sparkles, Waves } from "lucide-react";
+import { Contrast, Layers, Mountain, Radar, Sparkles, Waves } from "lucide-react";
 import {
   ELEVATION_GRADIENT_CSS,
   INFORMATION_GRADIENT_CSS,
+  INTENSITY_GRADIENT_CSS,
   RESOLUTION_COLORS,
   RESOLUTION_DESCRIPTIONS,
   RESOLUTION_LABELS,
@@ -21,6 +22,7 @@ const ICONS: Record<ViewMode, React.ComponentType<{ size?: number }>> = {
   resolution: Waves,
   elevation: Mountain,
   information: Sparkles,
+  intensity: Contrast,
 };
 
 export function ViewModeTabs({ mode, onChange }: ViewModeTabsProps) {
@@ -52,6 +54,10 @@ const OVERLAY_OPTIONS: { key: OverlayMode; label: string }[] = [
   { key: "raw", label: "Raw" },
   { key: "overlay", label: "Raw + FOVEA" },
   { key: "fovea", label: "FOVEA only" },
+  // Phase 3D: renders the LOD-selected chunk frontier (hierarchy -> LOD ->
+  // /chunks -> FVCH1 decode) instead of the full FOVEA cell list -- see
+  // src/scene/ChunkField.tsx. The three modes above are unchanged.
+  { key: "streaming", label: "Streaming (LOD)" },
 ];
 
 /** RAW / RAW+FOVEA / FOVEA-only -- lets the judge see the raw point cloud and
@@ -158,8 +164,23 @@ export function InformationLegend() {
 export function ElevationLegend() {
   return (
     <GradientLegend
-      title="Elevation (median z per cell)"
+      // Phase 4AB: this legend now covers both the FOVEA cell field (median
+      // z per cell) and the raw point cloud (each point's own real z) --
+      // wording kept generic on purpose rather than claiming a per-cell
+      // statistic that doesn't apply to a raw point.
+      title="Elevation (height, z)"
       gradientCss={ELEVATION_GRADIENT_CSS}
+      lowLabel="LOW"
+      highLabel="HIGH"
+    />
+  );
+}
+
+export function IntensityLegend() {
+  return (
+    <GradientLegend
+      title="Intensity (raw LiDAR return, points only)"
+      gradientCss={INTENSITY_GRADIENT_CSS}
       lowLabel="LOW"
       highLabel="HIGH"
     />
@@ -171,6 +192,7 @@ const VIEW_MODE_STORY: Record<ViewMode, string> = {
   resolution: "High-information regions receive finer spatial representation.",
   elevation: "Cell height/color reflects the region's measured elevation.",
   information: "Cell color reflects the FOVEA information score that drove the resolution decision.",
+  intensity: "Point color reflects the raw LiDAR return intensity -- FOVEA cells have no per-point intensity, so this view is most meaningful in Raw/Raw+FOVEA mode.",
 };
 
 /** Small explanatory strip near the hero visualization -- text only, never

@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { api } from "./api/client";
+import type { ChunkInfo } from "./api/fvch1";
 import type { Cell, DatasetName } from "./api/types";
 import { BenchmarkPanel } from "./components/BenchmarkPanel";
 import { CameraControls } from "./components/CameraControls";
@@ -8,10 +9,13 @@ import { Header } from "./components/Header";
 import { InformationAnalytics } from "./components/InformationAnalytics";
 import { PipelineFlow } from "./components/PipelineFlow";
 import { RegionInspector } from "./components/RegionInspector";
+import { StreamedChunkPanel } from "./components/StreamedChunkPanel";
+import { StreamingTelemetryPanel } from "./components/StreamingTelemetryPanel";
 import {
   ContextualLabel,
   ElevationLegend,
   InformationLegend,
+  IntensityLegend,
   OverlayModeControl,
   ResolutionLegend,
   SemanticLegend,
@@ -20,6 +24,7 @@ import {
 import { semanticColor, type ViewMode } from "./constants";
 import { useFrameData } from "./hooks/useFrameData";
 import { useStaticData } from "./hooks/useStaticData";
+import type { StreamingTelemetry } from "./scene/ChunkField";
 import { Scene, type CameraPreset, type OverlayMode } from "./scene/Scene";
 import { initSemanticLookup } from "./semanticLookup";
 
@@ -42,6 +47,13 @@ export default function App() {
     preset: "perspective",
     nonce: 0,
   });
+
+  // Phase 3D: state for the "Streaming (LOD)" overlay mode -- selected
+  // chunk (sidebar inspector) and live telemetry (LOD stage/nodes/points/
+  // payload/FPS). Both come from Scene -> ChunkField via callback props,
+  // same lifting pattern selectedIndex/onSelect already uses.
+  const [selectedChunk, setSelectedChunk] = useState<ChunkInfo | null>(null);
+  const [streamingTelemetry, setStreamingTelemetry] = useState<StreamingTelemetry | null>(null);
 
   // Semantic class legend/lookup, sourced from the backend's ontology for the
   // CURRENT dataset -- re-fetched on every dataset switch. This matters: a
@@ -106,6 +118,10 @@ export default function App() {
 
   // Reset the selected cell whenever the frame changes underneath it.
   useEffect(() => setSelectedIndex(null), [frameId]);
+  useEffect(() => {
+    setSelectedChunk(null);
+    setStreamingTelemetry(null);
+  }, [frameId, dataset]);
 
   // Lightweight autoplay: advance one frame at a fixed interval while playing.
   useEffect(() => {
@@ -189,6 +205,11 @@ export default function App() {
           onSelect={setSelectedIndex}
           framingRadius={framingRadius}
           cameraToken={cameraToken}
+          dataset={dataset}
+          sequence={sequence}
+          frameId={frameId}
+          onChunkSelect={setSelectedChunk}
+          onStreamingTelemetry={setStreamingTelemetry}
         />
 
         <div className="absolute top-3 left-3 right-3 flex items-start justify-between pointer-events-none gap-3">
@@ -200,6 +221,11 @@ export default function App() {
             <div className="pointer-events-auto pl-1">
               <ContextualLabel mode={viewMode} />
             </div>
+            {overlayMode === "streaming" && (
+              <div className="pointer-events-auto">
+                <StreamingTelemetryPanel telemetry={streamingTelemetry} />
+              </div>
+            )}
           </div>
           <div className="pointer-events-auto w-64 shrink-0">
             <PipelineFlow />
@@ -211,6 +237,7 @@ export default function App() {
           {viewMode === "semantic" && <SemanticLegend classes={presentSemanticClasses} />}
           {viewMode === "information" && <InformationLegend />}
           {viewMode === "elevation" && <ElevationLegend />}
+          {viewMode === "intensity" && <IntensityLegend />}
         </div>
 
         <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex items-center gap-2">
@@ -263,7 +290,11 @@ export default function App() {
       </main>
 
       <aside style={{ gridArea: "sidebar" }} className="fv-scrollbar overflow-y-auto p-3 flex flex-col gap-3">
-        <RegionInspector dataset={dataset} sequence={sequence} frameId={frameId} cell={selectedCell} />
+        {overlayMode === "streaming" ? (
+          <StreamedChunkPanel chunk={selectedChunk} />
+        ) : (
+          <RegionInspector dataset={dataset} sequence={sequence} frameId={frameId} cell={selectedCell} />
+        )}
         <InformationAnalytics
           cells={cells}
           summary={foveaMap?.summary ?? null}

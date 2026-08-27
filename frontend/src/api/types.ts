@@ -172,6 +172,45 @@ export interface BenchmarkResponse {
   message: string | null;
 }
 
+// --- Streamable spatial chunks (Phase 3C backend, Phase 3D frontend) -----
+// Mirrors src/api.py's ChunksResponse/LODConfigModel/ChunkTimingModel 1:1.
+// `payload_base64` is the FVCH1 binary blob -- decoded client-side by
+// src/api/fvch1.ts, never expanded into per-chunk JSON objects here.
+
+export interface LODConfig {
+  detail_threshold: number;
+  max_distance_m: number | null;
+  point_budget: number | null;
+  viewpoint_x: number;
+  viewpoint_y: number;
+}
+
+export interface ChunkTiming {
+  fovea_build_latency_s: number;
+  hierarchy_build_latency_s: number;
+  lod_selection_latency_s: number;
+  chunk_serialization_latency_s: number;
+}
+
+export interface ChunksResponse {
+  dataset: DatasetName;
+  sequence: string;
+  frame_id: string;
+  label_source: string;
+  source: string;
+  lod_config: LODConfig;
+  selected_node_count: number;
+  selected_point_count: number;
+  culled_root_count: number;
+  culled_subtree_count: number;
+  budget_dropped_node_count: number;
+  chunk_count: number;
+  payload_format: string;
+  payload_bytes: number;
+  payload_base64: string;
+  timing: ChunkTiming;
+}
+
 export interface FoveaConfig {
   data: { root: string; sequence: string; frame: number };
   distance_adaptive: { bands: { max_m: number; cell_size_m: number }[] };

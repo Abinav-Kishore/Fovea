@@ -27,6 +27,7 @@ Run with:  uvicorn src.api:app --reload --port 8000
 """
 from __future__ import annotations
 
+import base64
 import json
 import sys
 import threading
@@ -57,6 +58,9 @@ from src.spatial import (
     validate_no_duplicate_cells,
     validate_point_conservation,
 )
+from src.spatial.chunks import serialize_chunks_with_metadata
+from src.spatial.hierarchy import build_fovea_hierarchy
+from src.spatial.lod import LODSelectionConfig, select_lod_nodes
 from src.theme import LEVEL_LABELS
 from src.uniform_baseline import build_uniform_map
 
@@ -202,6 +206,7 @@ def _get_frame_entry(dataset: str, sequence: str, frame_id: str) -> dict[str, An
             "frame": frame,
             "maps": {},
             "map_locks": {method: threading.Lock() for method in _METHOD_FNS},
+            "hierarchy_lock": threading.Lock(),
         }
         _frame_cache[key] = entry
         _frame_cache_order.append(key)
@@ -236,6 +241,91 @@ def _get_map(dataset: str, sequence: str, frame_id: str, method: str) -> tuple[l
 
     cells, accounting, summary = entry["maps"][method]
     return cells, accounting, summary, entry["frame"]
+
+
+# ---------------------------------------------------------------------------
+# Hierarchy + LOD + chunk serialization (src/spatial/hierarchy.py, lod.py,
+# chunks.py -- all unmodified by this layer). Same cache-once-per-key /
+# lock-per-key coalescing discipline as _get_map/_get_prediction_map above:
+# the first request for a given key computes and caches, concurrent/later
+# requests for the SAME key reuse the cached result rather than recomputing.
+#
+# Ground-truth FOVEA mode only -- the coarse/medium/fine hierarchy is
+# specifically FOVEA's own 3-level structure (src/fovea_allocator.py), so
+# this reuses the SAME cached `_get_map(..., "fovea")` result every other
+# FOVEA-mode endpoint already uses. Nothing here recomputes it.
+# ---------------------------------------------------------------------------
+
+def _get_hierarchy(dataset: str, sequence: str, frame_id: str):
+    """Returns (roots, hierarchy_stats, hierarchy_build_latency_s), built
+    ONCE per frame from the existing, unmodified build_fovea_map output and
+    cached alongside it. `hierarchy_build_latency_s` is measured the one
+    time this actually runs and reused on cache hits -- same convention as
+    accounting["latency_s"] elsewhere in this module (a real one-time
+    measurement, not re-timed per request)."""
+    _, effective_cfg = _dataset_context(dataset)
+    entry = _get_frame_entry(dataset, sequence, frame_id)
+
+    if "hierarchy" in entry:
+        return entry["hierarchy"]
+
+    with entry["hierarchy_lock"]:
+        if "hierarchy" not in entry:
+            cells, accounting, _, _ = _get_map(dataset, sequence, frame_id, "fovea")
+            t0 = time.perf_counter()
+            roots, hstats = build_fovea_hierarchy(cells, accounting, effective_cfg)
+            entry["hierarchy"] = (roots, hstats, time.perf_counter() - t0)
+
+    return entry["hierarchy"]
+
+
+def _get_chunk_payload(
+    dataset: str,
+    sequence: str,
+    frame_id: str,
+    detail_threshold: float,
+    max_distance_m: Optional[float],
+    point_budget: Optional[int],
+    viewpoint_x: float,
+    viewpoint_y: float,
+):
+    """Returns (selection, payload_bytes, chunk_metadata) for one exact LOD
+    parameter combination, cached per (dataset, sequence, frame_id, *params)
+    key -- concurrent/repeat requests with the SAME viewpoint/thresholds
+    reuse the cached selection+payload instead of re-running select_lod_nodes
+    or re-serializing. Different parameters are a DIFFERENT cache key
+    (materially change the result), so they never collide."""
+    entry = _get_frame_entry(dataset, sequence, frame_id)
+    roots, _, _ = _get_hierarchy(dataset, sequence, frame_id)
+
+    key = (
+        round(float(detail_threshold), 6),
+        None if max_distance_m is None else round(float(max_distance_m), 6),
+        point_budget,
+        round(float(viewpoint_x), 6),
+        round(float(viewpoint_y), 6),
+    )
+    cache = entry.setdefault("chunk_cache", {})
+    locks = entry.setdefault("chunk_locks", {})
+
+    if key in cache:
+        return cache[key]
+
+    with _locks_guard:
+        lock = locks.setdefault(key, threading.Lock())
+
+    with lock:
+        if key not in cache:
+            lod_cfg = LODSelectionConfig(
+                detail_threshold=detail_threshold, max_distance_m=max_distance_m, point_budget=point_budget
+            )
+            selection = select_lod_nodes(roots, viewpoint=(viewpoint_x, viewpoint_y), config=lod_cfg)
+            payload, meta = serialize_chunks_with_metadata(
+                selection.nodes, "ground_truth", dataset, dataset, sequence, frame_id
+            )
+            cache[key] = (selection, payload, meta)
+
+    return cache[key]
 
 
 # ---------------------------------------------------------------------------
@@ -621,6 +711,57 @@ class Map25DResponse(BaseModel):
     geometry_valid: bool
 
 
+class LODConfigModel(BaseModel):
+    """Echoes back exactly the parameters that selected this response's LOD
+    frontier -- see src.spatial.lod.LODSelectionConfig."""
+
+    detail_threshold: float
+    max_distance_m: Optional[float]
+    point_budget: Optional[int]
+    viewpoint_x: float
+    viewpoint_y: float
+
+
+class ChunkTimingModel(BaseModel):
+    """Each stage measured SEPARATELY (Phase 3C requirement). Every field is
+    a real one-time measurement from when that stage actually ran for this
+    (frame, parameter-combination) -- reused on cache hits, the same
+    convention `accounting["latency_s"]` already uses elsewhere in this API.
+    Not a per-request wall-clock breakdown."""
+
+    fovea_build_latency_s: float
+    hierarchy_build_latency_s: float
+    lod_selection_latency_s: float
+    chunk_serialization_latency_s: float
+
+
+class ChunksResponse(BaseModel):
+    """Streamable spatial chunks for an existing FOVEA hierarchy + LOD
+    frontier (src/spatial/chunks.py). `payload_base64` is the FVCH1 binary
+    payload (see src/spatial/chunks.py's module docstring) base64-encoded
+    for transport inside a JSON body -- NOT a list of tens of thousands of
+    per-chunk JSON objects. `payload_bytes` is the RAW binary size (before
+    base64's ~33% wire-size inflation, which exists only because this
+    endpoint returns JSON like every other endpoint here -- see README)."""
+
+    dataset: str
+    sequence: str
+    frame_id: str
+    label_source: str
+    source: str
+    lod_config: LODConfigModel
+    selected_node_count: int
+    selected_point_count: int
+    culled_root_count: int
+    culled_subtree_count: int
+    budget_dropped_node_count: int
+    chunk_count: int
+    payload_format: str
+    payload_bytes: int
+    payload_base64: str
+    timing: ChunkTimingModel
+
+
 # ---------------------------------------------------------------------------
 # Internal, dataset-parameterized response builders -- both the new
 # /api/datasets/{dataset}/... routes and the legacy SemanticPOSS-only routes
@@ -885,6 +1026,57 @@ def _map_2_5d_response(
     )
 
 
+def _chunks_response(
+    dataset: str,
+    sequence: str,
+    frame_id: str,
+    detail_threshold: float,
+    max_distance_m: Optional[float],
+    point_budget: Optional[int],
+    viewpoint_x: float,
+    viewpoint_y: float,
+) -> ChunksResponse:
+    """Wraps the EXISTING hierarchy (src/spatial/hierarchy.py) + LOD
+    selector (src/spatial/lod.py) + chunk serializer (src/spatial/chunks.py)
+    -- this function makes no FOVEA/hierarchy/LOD decision of its own, only
+    cache lookups and response assembly. Ground-truth FOVEA mode only."""
+    cells, accounting, _, frame = _get_map(dataset, sequence, frame_id, "fovea")
+    _, _, hierarchy_latency_s = _get_hierarchy(dataset, sequence, frame_id)
+    selection, payload, meta = _get_chunk_payload(
+        dataset, sequence, frame_id, detail_threshold, max_distance_m, point_budget, viewpoint_x, viewpoint_y
+    )
+
+    return ChunksResponse(
+        dataset=dataset,
+        sequence=sequence,
+        frame_id=frame.frame_id,
+        label_source="ground_truth",
+        source=dataset,
+        lod_config=LODConfigModel(
+            detail_threshold=detail_threshold,
+            max_distance_m=max_distance_m,
+            point_budget=point_budget,
+            viewpoint_x=viewpoint_x,
+            viewpoint_y=viewpoint_y,
+        ),
+        selected_node_count=selection.node_count,
+        selected_point_count=selection.total_point_count,
+        culled_root_count=selection.culled_root_count,
+        culled_subtree_count=selection.culled_subtree_count,
+        budget_dropped_node_count=selection.budget_dropped_node_count,
+        chunk_count=meta.chunk_count,
+        payload_format=meta.payload_format,
+        payload_bytes=meta.payload_bytes,
+        payload_base64=base64.b64encode(payload).decode("ascii"),
+        timing=ChunkTimingModel(
+            fovea_build_latency_s=float(accounting.get("latency_s", 0.0)),
+            hierarchy_build_latency_s=hierarchy_latency_s,
+            lod_selection_latency_s=selection.latency_s,
+            chunk_serialization_latency_s=meta.serialization_latency_s,
+        ),
+    )
+
+
 # ---------------------------------------------------------------------------
 # Endpoints -- dataset-aware (primary)
 # ---------------------------------------------------------------------------
@@ -1055,6 +1247,35 @@ def get_dataset_map_2_5d(
     representation layer, not a new computation. Default behavior
     (label_source=ground_truth) leaves every existing endpoint untouched."""
     return _map_2_5d_response(dataset, sequence, frame_id, method, label_source, model, include_cells)
+
+
+@app.get(
+    "/api/datasets/{dataset}/frames/{sequence}/{frame_id}/chunks",
+    response_model=ChunksResponse,
+)
+def get_dataset_chunks(
+    dataset: str,
+    sequence: str,
+    frame_id: str,
+    detail_threshold: float = Query(
+        default=0.01, gt=0.0, description="LOD apparent-size threshold (cell_size_m / distance) -- see src/spatial/lod.py."
+    ),
+    max_distance: Optional[float] = Query(
+        default=None, ge=0.0, description="Culls whole subtrees beyond this planar distance (m) from the viewpoint. Omit for no culling."
+    ),
+    point_budget: Optional[int] = Query(
+        default=None, ge=0, description="Caps total selected point_count -- drops the farthest chunks first if exceeded. Omit for no budget."
+    ),
+    viewpoint_x: float = Query(default=0.0, description="Viewpoint X, sensor/vehicle origin frame (same frame as config.yaml's origin)."),
+    viewpoint_y: float = Query(default=0.0, description="Viewpoint Y, sensor/vehicle origin frame."),
+):
+    """Streamable spatial chunks (src/spatial/chunks.py) for an existing
+    FOVEA hierarchy (src/spatial/hierarchy.py) + LOD frontier
+    (src/spatial/lod.py, select_lod_nodes) -- ground-truth FOVEA mode. This
+    endpoint performs no FOVEA/hierarchy/LOD decision-making of its own,
+    only cache lookup + chunk serialization; LOD logic is never duplicated
+    here. See ChunksResponse/ChunkTimingModel for what's returned."""
+    return _chunks_response(dataset, sequence, frame_id, detail_threshold, max_distance, point_budget, viewpoint_x, viewpoint_y)
 
 
 @app.get(

@@ -93,6 +93,19 @@ export function elevationColor(t: number): string {
   return rampColor(t, ELEVATION_STOPS);
 }
 
+// Intensity ramp: dark -> mid gray -> white, the standard grayscale
+// convention LiDAR viewers (CloudCompare, Potree, etc.) use for raw return
+// intensity/reflectivity -- deliberately NOT a semantic/heat color, so it
+// never reads as "another semantic view" by accident.
+const INTENSITY_STOPS: RampStop[] = [
+  [0.0, [10, 12, 18]],
+  [0.5, [120, 128, 140]],
+  [1.0, [255, 255, 255]],
+];
+export function intensityColor(t: number): string {
+  return rampColor(t, INTENSITY_STOPS);
+}
+
 function rampCssGradient(stops: RampStop[]): string {
   const parts = stops.map(([t, [r, g, b]]) => `rgb(${r},${g},${b}) ${(t * 100).toFixed(0)}%`);
   return `linear-gradient(90deg, ${parts.join(", ")})`;
@@ -102,8 +115,15 @@ function rampCssGradient(stops: RampStop[]): string {
 // legend bar always matches what's actually rendered -- one source of truth.
 export const INFORMATION_GRADIENT_CSS = rampCssGradient(INFORMATION_STOPS);
 export const ELEVATION_GRADIENT_CSS = rampCssGradient(ELEVATION_STOPS);
+export const INTENSITY_GRADIENT_CSS = rampCssGradient(INTENSITY_STOPS);
 
-export const VIEW_MODES = ["semantic", "resolution", "elevation", "information"] as const;
+// "intensity" only has real data on RAW LiDAR points (PointsResponse.intensity,
+// already transported by the existing /points endpoint) -- FOVEA cells never
+// aggregated an intensity value (src/map_structure.py's Cell has no such
+// field), so CellField/ChunkField fall through to their existing default
+// (information-score coloring) for this mode, same as they already do for
+// any other cell-less concept -- nothing invented for cells.
+export const VIEW_MODES = ["semantic", "resolution", "elevation", "information", "intensity"] as const;
 export type ViewMode = (typeof VIEW_MODES)[number];
 
 export const VIEW_MODE_LABELS: Record<ViewMode, string> = {
@@ -111,6 +131,7 @@ export const VIEW_MODE_LABELS: Record<ViewMode, string> = {
   resolution: "Resolution",
   elevation: "Elevation",
   information: "Information",
+  intensity: "Intensity",
 };
 
 export const METHOD_LABELS: Record<string, string> = {

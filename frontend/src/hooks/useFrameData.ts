@@ -32,7 +32,21 @@ export interface FrameData {
   secondaryError: string | null;
 }
 
-const POINT_CLOUD_CAP = 20000;
+// Raised again (rendering-upgrade task) from 45,000 to 100,000, AFTER
+// checking real frame sizes and the backend's own limit first:
+//   - GET /points?max= is capped server-side at le=200_000 (src/api.py) --
+//     100,000 is comfortably inside that, not a blind increase.
+//   - Measured real frame sizes (frame_diagnostics.num_points): SemanticPOSS
+//     seq 00 tops out around 67k points (frame 000487: 67,104); RELLIS-3D
+//     tops out around 40k (seq 00002/000500: 40,326). 100,000 is above BOTH
+//     observed maxima, so every real frame in either dataset now returns
+//     `subsampled: false` -- the FULL actual point set, not a sample of it.
+//   - Payload for the largest real frame at this cap measured ~4.3 MB,
+//     fetched in ~46ms locally -- see README's rendering-upgrade section.
+// Same existing /points endpoint, same existing subsampling logic
+// (src/api.py's _points_response) -- no backend change, just a larger
+// requested cap that now rarely if ever triggers a subsample.
+const POINT_CLOUD_CAP = 100000;
 
 const INITIAL_STATE: FrameData = {
   diagnostics: null,

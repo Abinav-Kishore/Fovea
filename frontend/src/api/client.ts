@@ -1,5 +1,6 @@
 import type {
   BenchmarkResponse,
+  ChunksResponse,
   DatasetName,
   DatasetsResponse,
   ExplainResponse,
@@ -109,6 +110,38 @@ export const api = {
 
   getBenchmark: (dataset: DatasetName, signal?: AbortSignal) =>
     request<BenchmarkResponse>(`/api/datasets/${enc(dataset)}/benchmark`, signal),
+
+  /** Streamable spatial chunks (src/spatial/hierarchy.py + lod.py + chunks.py,
+   * via src/api.py's /chunks route) -- ONE call returns both the LOD/hierarchy
+   * metadata AND the serialized chunk payload (base64 FVCH1). This function
+   * only passes the caller's desired LOD parameters through as query params;
+   * it makes no LOD/hierarchy decision itself (that's entirely server-side --
+   * see select_lod_nodes/build_fovea_hierarchy, unmodified). */
+  getChunks: (
+    dataset: DatasetName,
+    sequence: string,
+    frameId: string,
+    params: {
+      detailThreshold?: number;
+      maxDistance?: number;
+      pointBudget?: number;
+      viewpointX?: number;
+      viewpointY?: number;
+    } = {},
+    signal?: AbortSignal
+  ) => {
+    const qs = new URLSearchParams();
+    if (params.detailThreshold !== undefined) qs.set("detail_threshold", String(params.detailThreshold));
+    if (params.maxDistance !== undefined) qs.set("max_distance", String(params.maxDistance));
+    if (params.pointBudget !== undefined) qs.set("point_budget", String(params.pointBudget));
+    if (params.viewpointX !== undefined) qs.set("viewpoint_x", String(params.viewpointX));
+    if (params.viewpointY !== undefined) qs.set("viewpoint_y", String(params.viewpointY));
+    const query = qs.toString();
+    return request<ChunksResponse>(
+      `/api/datasets/${enc(dataset)}/frames/${enc(sequence)}/${enc(frameId)}/chunks${query ? `?${query}` : ""}`,
+      signal
+    );
+  },
 };
 
 export { ApiError };
