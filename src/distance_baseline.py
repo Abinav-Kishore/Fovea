@@ -24,7 +24,10 @@ def effective_bands(bands: list[dict], actual_max_range_m: float | None) -> list
     return bands
 
 
-def build_distance_adaptive_map(points, semantic_labels, cfg) -> tuple[list[Cell], dict]:
+def build_distance_adaptive_map(points, semantic_labels, cfg, label_dict: dict | None = None) -> tuple[list[Cell], dict]:
+    """`label_dict` is OPTIONAL (defaults to SemanticPOSS's LABEL_DICT) so a
+    different dataset (e.g. RELLIS-3D) can resolve class names correctly --
+    see src/map_structure.py's aggregate_points_to_cells docstring."""
     t0 = time.perf_counter()
     origin = (cfg["origin"]["x"], cfg["origin"]["y"])
     bands = cfg["distance_adaptive"]["bands"]
@@ -52,6 +55,7 @@ def build_distance_adaptive_map(points, semantic_labels, cfg) -> tuple[list[Cell
         resolution_level[in_envelope], band_id[in_envelope],
         origin, fovea_cfg["semantic_priority"], set(fovea_cfg["dynamic_classes"]),
         fovea_cfg["geometry"]["max_expected_std_m"], fovea_cfg["weights"],
+        label_dict=label_dict,
     )
     n_invalid = int(in_envelope.sum()) - agg_accounting["valid_points"]
     accounting = {

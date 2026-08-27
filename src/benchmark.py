@@ -24,10 +24,22 @@ from src.metrics import benchmark_latency, environment_info, summarize_method
 from src.uniform_baseline import build_uniform_map
 
 
-def run_benchmark(cfg: dict, sequence: str, num_frames: int, repeats: int) -> dict:
-    frame_ids = list_frame_ids(cfg["data"]["root"], sequence)[:num_frames]
+def run_benchmark(cfg: dict, sequence: str, num_frames: int, repeats: int, adapter=None) -> dict:
+    """`adapter` is an OPTIONAL src.datasets.DatasetAdapter. When omitted
+    (default), behavior is byte-identical to v0.1: frames come from
+    cfg["data"]["root"] via data_loader's SemanticPOSS-specific functions.
+    When provided (e.g. a RELLIS-3D adapter), frame discovery/loading and
+    class-name resolution go through the adapter instead -- no scoring/
+    allocation logic changes either way."""
+    if adapter is not None:
+        frame_ids = adapter.list_frames(sequence)[:num_frames]
+        label_dict = adapter.label_dict()
+    else:
+        frame_ids = list_frame_ids(cfg["data"]["root"], sequence)[:num_frames]
+        label_dict = None
     if not frame_ids:
-        raise RuntimeError(f"No frames found for sequence {sequence} under {cfg['data']['root']}")
+        root = adapter.name if adapter is not None else cfg["data"]["root"]
+        raise RuntimeError(f"No frames found for sequence {sequence} under {root}")
 
     per_frame_results = []
     method_fns = {
@@ -39,12 +51,12 @@ def run_benchmark(cfg: dict, sequence: str, num_frames: int, repeats: int) -> di
 
     sequence_start = datetime.datetime.now()
     for fid in frame_ids:
-        frame = load_frame(cfg["data"]["root"], sequence, fid)
+        frame = adapter.load_frame(sequence, fid) if adapter is not None else load_frame(cfg["data"]["root"], sequence, fid)
         frame_result = {"frame_id": fid, "num_points": int(frame.points.shape[0]), "methods": {}}
         for name, fn in method_fns.items():
-            cells, acc = fn(frame.points, frame.semantic_labels, cfg)
+            cells, acc = fn(frame.points, frame.semantic_labels, cfg, label_dict=label_dict)
             summary = summarize_method(cells, acc, bands)
-            timing = benchmark_latency(fn, frame.points, frame.semantic_labels, cfg, repeats)
+            timing = benchmark_latency(fn, frame.points, frame.semantic_labels, cfg, repeats, label_dict=label_dict)
             summary["timing_repeats"] = timing
             frame_result["methods"][name] = summary
         per_frame_results.append(frame_result)
@@ -56,6 +68,7 @@ def run_benchmark(cfg: dict, sequence: str, num_frames: int, repeats: int) -> di
     return {
         "timestamp": datetime.datetime.now().isoformat(),
         "config": cfg,
+        "dataset": adapter.name if adapter is not None else "SemanticPOSS",
         "sequence": sequence,
         "num_frames_processed": n_frames,
         "environment": environment_info(),

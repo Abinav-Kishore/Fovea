@@ -46,7 +46,13 @@ def _encode(band: np.ndarray, ix: np.ndarray, iy: np.ndarray) -> np.ndarray:
     return (band * _SHIFT + ix) * _SHIFT + iy
 
 
-def build_fovea_map(points: np.ndarray, semantic_labels: np.ndarray, cfg: dict) -> tuple[list, dict]:
+def build_fovea_map(
+    points: np.ndarray, semantic_labels: np.ndarray, cfg: dict, label_dict: dict | None = None
+) -> tuple[list, dict]:
+    """`label_dict` is OPTIONAL (defaults to SemanticPOSS's LABEL_DICT) so a
+    different dataset (e.g. RELLIS-3D) can resolve class names correctly --
+    see src/map_structure.py's aggregate_points_to_cells docstring. No
+    allocation math changes based on which table is passed in."""
     t0 = time.perf_counter()
     n_total_input = points.shape[0]
     origin = (cfg["origin"]["x"], cfg["origin"]["y"])
@@ -88,6 +94,7 @@ def build_fovea_map(points: np.ndarray, semantic_labels: np.ndarray, cfg: dict) 
     finest_cells, finest_accounting = aggregate_points_to_cells(
         pts, labels, ix_f, iy_f, finest_cs, np.full(x.shape, 2, dtype=np.int64), band_id,
         origin, priority_table, dynamic_classes, geometry_max_std, weights,
+        label_dict=label_dict,
     )
     n_invalid = pts.shape[0] - finest_accounting["valid_points"]
 
@@ -158,6 +165,7 @@ def build_fovea_map(points: np.ndarray, semantic_labels: np.ndarray, cfg: dict) 
         point_final_ix[matched], point_final_iy[matched], point_final_cs[matched],
         point_final_res[matched], band_id[matched],
         origin, priority_table, dynamic_classes, geometry_max_std, weights,
+        label_dict=label_dict,
     )
 
     n_unmatched = int((~matched).sum())

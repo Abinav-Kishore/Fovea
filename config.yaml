@@ -3,7 +3,7 @@
 # not a validated or final mathematical formulation.
 
 data:
-  root: SemanticPOSS_dataset/dataset   # contains sequences/<seq>/{velodyne,labels}
+  root: dataset  # contains sequences/<seq>/{velodyne,labels}
   sequence: "00"
   frame: 0                              # default frame index (overridden by demo autoscan)
 
@@ -83,3 +83,105 @@ visualization:
 benchmark:
   num_frames: 10
   repeats_for_timing: 3
+
+# ---------------------------------------------------------------------------
+# Multi-dataset support. `data:` above stays byte-identical to v0.1 -- it IS
+# datasets.SemanticPOSS's root, kept in its original place so nothing that
+# already reads cfg["data"]["root"] (data_loader.py, app.py, benchmark.py)
+# has to change. This section only ADDS RELLIS-3D as a second dataset and
+# gives SemanticPOSS an equivalent entry point under the same registry.
+# ---------------------------------------------------------------------------
+datasets:
+  default: SemanticPOSS   # must stay SemanticPOSS -- existing commands/tests assume this
+
+  SemanticPOSS:
+    root: dataset   # identical to data.root above
+
+  RELLIS-3D:
+    # RELLIS ships as two separately-downloaded archives (point clouds and
+    # annotations); we read them in place, never copy/merge them.
+    pointcloud_root: Rellis-3D
+    label_root: "Rellis-3D 2"
+    pointcloud_subdir: vel_cloud_node_kitti_bin
+    label_subdir: vel_cloud_node_semantickitti_label_id
+    sequences: ["00000", "00001", "00002", "00003", "00004"]
+
+    # PROTOTYPE HEURISTIC semantic priorities for RELLIS-3D's off-road
+    # ontology (src/datasets/rellis_labels.py) -- NOT scientifically
+    # validated, same heuristic spirit as SemanticPOSS's table above but a
+    # SEPARATE table: RELLIS is a different scene distribution (off-road
+    # terrain vs. SemanticPOSS's campus/urban), so SemanticPOSS's values are
+    # not reused. Any RELLIS class not listed here defaults to 0.1, same
+    # fallback convention as SemanticPOSS.
+    semantic_priority:
+      void: 0.05
+      dirt: 0.1
+      grass: 0.05
+      tree: 0.25
+      pole: 0.4
+      water: 0.7
+      sky: 0.05
+      vehicle: 0.9
+      object: 0.5
+      asphalt: 0.05
+      building: 0.2
+      log: 0.6
+      person: 1.0
+      fence: 0.3
+      bush: 0.15
+      concrete: 0.05
+      barrier: 0.6
+      puddle: 0.55
+      mud: 0.5
+      rubble: 0.6
+
+    # Semantic-category proxy only (documented limitation, identical concept
+    # to SemanticPOSS's dynamic_classes -- NOT real motion/temporal tracking).
+    # RELLIS's ontology has no rider/bike-equivalent category, so this list
+    # is shorter than SemanticPOSS's.
+    dynamic_classes: ["person", "vehicle"]
+
+# ---------------------------------------------------------------------------
+# Perception (real AI inference, src/perception/) -- used when FOVEA is run
+# in "prediction" mode instead of "ground_truth" mode (see src/api.py's
+# label_source query param). The FOVEA allocator itself is unmodified: it
+# still just reads cfg["fovea"]["semantic_priority"]/["dynamic_classes"];
+# this section provides the substitute values for those two keys specific
+# to the MODEL's own ontology (semantickitti-20), since predicted labels
+# are never in a dataset's own class-id space -- see src/perception/ontology.py.
+# ---------------------------------------------------------------------------
+perception:
+  default_model: squeezeseg
+  models:
+    squeezeseg:
+      checkpoint_dir: models/squeezeseg
+      ontology: semantickitti-20
+
+      # PROTOTYPE HEURISTIC (same status as the SemanticPOSS/RELLIS-3D
+      # tables above -- not scientifically validated), keyed EXACTLY by the
+      # names in the checkpoint's own data_cfg.yaml -> learning_map_inv.
+      semantic_priority:
+        unlabeled: 0.05
+        car: 0.9
+        bicycle: 0.7
+        motorcycle: 0.7
+        truck: 0.85
+        other-vehicle: 0.8
+        person: 1.0
+        bicyclist: 0.9
+        motorcyclist: 0.9
+        road: 0.05
+        parking: 0.05
+        sidewalk: 0.05
+        other-ground: 0.05
+        building: 0.2
+        fence: 0.3
+        vegetation: 0.15
+        trunk: 0.25
+        terrain: 0.05
+        pole: 0.4
+        traffic-sign: 0.6
+
+      # Semantic-category proxy only (same documented limitation as the
+      # other two datasets' dynamic_classes -- NOT real motion tracking).
+      dynamic_classes: ["person", "bicyclist", "motorcyclist", "car", "truck", "other-vehicle"]

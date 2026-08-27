@@ -92,15 +92,18 @@ def summarize_method(cells: list[Cell], accounting: dict, bands: list[dict]) -> 
     }
 
 
-def benchmark_latency(build_fn, points, labels, cfg, repeats: int) -> dict:
+def benchmark_latency(build_fn, points, labels, cfg, repeats: int, label_dict: dict | None = None) -> dict:
     """Repeated-run timing for a single map-generation function. Reports real
     wall-clock latency only -- labelled as single-frame latency, never as FPS,
-    since a single static frame is not a throughput measurement."""
+    since a single static frame is not a throughput measurement.
+
+    `label_dict` is OPTIONAL (defaults to SemanticPOSS's, via build_fn's own
+    default) -- lets this time a non-SemanticPOSS dataset's map build too."""
     times = []
     n_cells_last = 0
     for _ in range(max(1, repeats)):
         t0 = time.perf_counter()
-        cells, _ = build_fn(points, labels, cfg)
+        cells, _ = build_fn(points, labels, cfg, label_dict=label_dict)
         times.append(time.perf_counter() - t0)
         n_cells_last = len(cells)
     times = np.array(times)

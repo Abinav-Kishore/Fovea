@@ -23,7 +23,7 @@ import numpy as np
 import pandas as pd
 
 from src.geometry import cell_center
-from src.semantic_labels import LABEL_DICT, UNKNOWN_CLASS_NAME, class_name, priority_lookup
+from src.semantic_labels import LABEL_DICT, UNKNOWN_CLASS_NAME
 
 
 @dataclass
@@ -38,6 +38,8 @@ class Cell:
     point_count: int
     elevation_median: float
     elevation_std: float
+    elevation_min: float  # min/max of the cell's own points -- additive stats, no effect on any FOVEA score/decision
+    elevation_max: float
     majority_class_id: int
     majority_class_name: str
     majority_class_fraction: float
@@ -62,16 +64,24 @@ def compute_information_score(
     dynamic_classes: set,
     geometry_max_std: float,
     weights: dict,
+    label_dict: dict | None = None,
 ) -> tuple[float, float, float, float]:
     """Returns (semantic_score, geometry_score, dynamic_score, information_score).
 
     information_score is a weighted sum, renormalized by the sum of weights
     actually enabled (uncertainty defaults to weight 0 -- SemanticPOSS has no
     confidence field, so we do not invent one).
+
+    `label_dict` is an OPTIONAL class-id->name table (defaults to SemanticPOSS's
+    LABEL_DICT for exact backward compatibility). This lets a different dataset
+    (e.g. RELLIS-3D, which has its own ontology -- see src/datasets/) resolve
+    class names correctly, without this module hardcoding one dataset's ids.
+    No allocation/scoring math changes based on which table is passed in.
     """
-    sem_score = priority_lookup(majority_class_id, priority_table)
+    name = (label_dict or LABEL_DICT).get(int(majority_class_id), UNKNOWN_CLASS_NAME)
+    sem_score = float(priority_table.get(name, 0.1))
     geo_score = float(np.clip(elevation_std / max(geometry_max_std, 1e-9), 0.0, 1.0))
-    dyn_score = 1.0 if class_name(majority_class_id) in dynamic_classes else 0.0
+    dyn_score = 1.0 if name in dynamic_classes else 0.0
 
     w_sem = weights.get("semantic", 0.0)
     w_geo = weights.get("geometry", 0.0)
@@ -100,11 +110,16 @@ def aggregate_points_to_cells(
     dynamic_classes: set,
     geometry_max_std: float,
     weights: dict,
+    label_dict: dict | None = None,
 ) -> tuple[list[Cell], dict]:
     """Vectorized group-by over points using an integer group key, then a
     per-group aggregation pass. Returns (cells, accounting) where accounting
     tracks input/assigned/rejected point counts (no silent point loss).
+
+    `label_dict` is OPTIONAL (defaults to SemanticPOSS's LABEL_DICT) -- see
+    compute_information_score's docstring for why.
     """
+    _label_dict = label_dict if label_dict is not None else LABEL_DICT
     n_input = points.shape[0]
     valid = np.isfinite(points[:, 0]) & np.isfinite(points[:, 1]) & np.isfinite(points[:, 2]) & (band_id >= -1)
     valid &= ~np.isnan(cell_size)
@@ -150,6 +165,8 @@ def aggregate_points_to_cells(
         point_count=("z", "size"),
         elevation_median=("z", "median"),
         elevation_std=("z", "std"),
+        elevation_min=("z", "min"),
+        elevation_max=("z", "max"),
     ).reset_index()
     stats["elevation_std"] = stats["elevation_std"].fillna(0.0)  # single-point cells -> 0 spread
 
@@ -161,7 +178,7 @@ def aggregate_points_to_cells(
     stats = stats.merge(majority, on=group_cols, how="left")
     stats["majority_class_fraction"] = stats["majority_count"] / stats["point_count"]
 
-    class_names = stats["majority_class_id"].map(LABEL_DICT).fillna(UNKNOWN_CLASS_NAME)
+    class_names = stats["majority_class_id"].map(_label_dict).fillna(UNKNOWN_CLASS_NAME)
     stats["majority_class_name"] = class_names
     stats["semantic_priority"] = class_names.map(priority_table).fillna(0.1).astype(float)
     stats["geometry_score"] = (stats["elevation_std"] / max(geometry_max_std, 1e-9)).clip(0.0, 1.0)
@@ -197,6 +214,8 @@ def aggregate_points_to_cells(
             point_count=int(r.point_count),
             elevation_median=float(r.elevation_median),
             elevation_std=float(r.elevation_std),
+            elevation_min=float(r.elevation_min),
+            elevation_max=float(r.elevation_max),
             majority_class_id=int(r.majority_class_id),
             majority_class_name=str(r.majority_class_name),
             majority_class_fraction=float(r.majority_class_fraction),
