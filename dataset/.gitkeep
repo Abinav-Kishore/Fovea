@@ -1,0 +1,7 @@
+Placeholder so `dataset/` exists after a fresh clone. Place SemanticPOSS here:
+
+  dataset/sequences/<seq>/velodyne/*.bin
+  dataset/sequences/<seq>/labels/*.label
+
+See README.md ("Dataset setup") for details. Actual dataset content is
+gitignored (multi-GB, not committed).
